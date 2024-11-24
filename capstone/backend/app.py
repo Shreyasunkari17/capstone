@@ -8,7 +8,7 @@ from flask_login import LoginManager
 
 app = Flask(__name__)
 
-CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000, http://3.129.207.78:3000"}}, supports_credentials=True)
 
 app.config.from_object('config.Config')
 
