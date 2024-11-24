@@ -224,8 +224,8 @@ def search_project():
 
 
 
-@api.route('/login',methods=['POST'])
-def login():
+@api.route('/umbc-login',methods=['POST'])
+def umbcLogin():
     try:
         data = request.get_json()
         email = data.get('email')
