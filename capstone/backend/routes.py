@@ -149,7 +149,7 @@ def create_user():
         email = data.get('email')
         password = data.get('password')
         role = data.get('role')
-        department_id = data.get('department_id')
+        department_id = data.get('department')
 
         if User.query.filter_by(email=email).first():
             return jsonify({'message': 'Email is already registered.'}), 400
