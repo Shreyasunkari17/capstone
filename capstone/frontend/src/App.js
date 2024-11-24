@@ -62,11 +62,11 @@ function App() {
                 value={mode}
                 style={{ padding: "2% 10%" }}
               >
-                {/* {localStorage.getItem("role") === "Admin" && ( */}
+                {localStorage.getItem("role") === "Admin" && (
                   <Radio.Button value="users" className="dashboard-tabs">
-                    Users
-                  </Radio.Button>
-                {/* )} */}
+                  Users
+                </Radio.Button>
+                )}
                 <Radio.Button value="projects" className="dashboard-tabs">
                   Projects
                 </Radio.Button>
