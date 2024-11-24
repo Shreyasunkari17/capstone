@@ -8,7 +8,7 @@ def handle_preflight():
         response = jsonify({'message': 'CORS preflight successful'})
         response.headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
         response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
-        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
         return response, 200
 
 # Upload Project
