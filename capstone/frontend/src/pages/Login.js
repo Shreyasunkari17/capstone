@@ -10,33 +10,26 @@ function Login({ setIsAuthenticated }) {
 
   const handleLogin = async () => {
     setShowLoader(true);
-
-    localStorage.setItem("role", "Admin");
-    localStorage.setItem("id", "7");
-    localStorage.setItem("name", "Admin");
-    localStorage.setItem("email", "admin@example.com");
-    
     try {
-      const response = await fetch("http://3.129.207.78:5000/api/login", {
+      await fetch("http://3.129.207.78:5000/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(state),
-        credentials: "include",
-      });
-
-      if (response.ok) {
+      }).then(response => response.json())  // Parse JSON response
+      .then(data => {
         setIsAuthenticated(true);
-        localStorage.setItem("role", response.data.role);
-        localStorage.setItem("id", response.data.id);
-        localStorage.setItem("name", response.data.name);
-        localStorage.setItem("email", response.data.email);
-        navigate(response.data.role === "Admin" ? "/users" : "/projects");
+        localStorage.setItem("role", data.data.role);
+        localStorage.setItem("id", data.data.id);
+        localStorage.setItem("name", data.data.name);
+        localStorage.setItem("email", data.data.email);
+        navigate(data.data.role === "Admin" ? "/users" : "/projects");
         setShowLoader(false);
-      } else {
-        const errorData = await response.json();
+      }).catch(error => {
+        message.error(
+          "Failed to login. Please check your credentials or server."
+        );
         setShowLoader(false);
-        message.error(errorData.message);
-      }
+      });
     } catch (error) {
       message.error(
         "Failed to login. Please check your credentials or server."
