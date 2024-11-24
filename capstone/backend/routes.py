@@ -1,7 +1,6 @@
 from flask import Blueprint, request, jsonify
 from models import db, User, Project, Media, Department
 import os
-
 api = Blueprint('api', __name__,url_prefix='/api')
 
 def handle_preflight():
@@ -222,4 +221,82 @@ def search_project():
     except Exception as e:
         print(f"Error fetching users: {e}")
         return jsonify({'message': 'Internal server error'}), 500
+
+
+
+@api.route('/login',methods=['POST'])
+def login():
+    try:
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
+        if not email or not password:
+            return jsonify({"error": "Email and password are required"}), 400
+        user = User.query.filter_by(email=email).first()
+        if user and user.check_password(password):
+            user_profile = {
+                'id': user.id,
+                'name': user.name,
+                'email': user.email,
+                'role': user.role,
+                'department': user.department.name if user.department else None,
+                'projects': [
+                    {'id': project.id, 'title': project.title}
+                    for project in user.projects_created
+                ]
+            }
+            return jsonify({"data": user_profile}), 200
+        else:
+            return jsonify({"error": "Invalid email or password"}), 401
+    except Exception as e:
+        print(f"Error fetching users: {e}")
+        return jsonify({'message': 'Internal server error'}), 500
+        
+# @api.route('/add_bookmark',methods=['POST'])
+# def add_bookmark():
+#     try:
+#         data = request.get_json()
+#         user_id = data.get('user_id')
+#         project_id = data.get('project_id')
+#         if not user_id or not project_id:
+#             return jsonify({"error": "user_id and project_id are required"}), 400
+        
+#         # Check if the bookmark already exists
+#         existing_bookmark = Bookmark.query().filter_by(user_id=user_id, project_id=project_id).first()
+#         if existing_bookmark:
+#             return jsonify({"message": "Bookmark already exists"}), 200
+        
+#         # Add the new bookmark
+#         new_bookmark = Bookmark(user_id=user_id, project_id=project_id, created_time=date.today())
+#         db.session.add(new_bookmark)
+#         db.session.commit()
+#         return jsonify({"message": "Bookmark added successfully"}), 201
+#     except Exception as e:
+#         db.session.rollback()
+#         return jsonify({"error": f"Error adding bookmark: {str(e)}"}), 500
+
+# @api.route('/remove_bookmark', methods=['DELETE'])
+# def remove_bookmark():
+#     try:
+#         data = request.json
+#         user_id = data.get('user_id')
+#         project_id = data.get('project_id')
+
+#         if not user_id or not project_id:
+#             return jsonify({"error": "user_id and project_id are required"}), 400
+
+#         # Find the bookmark to delete
+#         bookmark_to_delete = Bookmark.query().filter_by(user_id=user_id, project_id=project_id).first()
+#         if not bookmark_to_delete:
+#             return jsonify({"error": "Bookmark not found"}), 404
+
+#         # Delete the bookmark
+#         db.session.delete(bookmark_to_delete)
+#         db.session.commit()
+#         return jsonify({"message": "Bookmark removed successfully"}), 200
+#     except Exception as e:
+#         db.session.rollback()
+#         return jsonify({"error": f"Error removing bookmark: {str(e)}"}), 500
+
+
 
