@@ -38,7 +38,7 @@ def handle_preflight():
         response = jsonify({'message': 'CORS preflight successful'})
         response.headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS, PUT, DELETE'
         response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
-        response.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response.headers['Access-Control-Allow-Origin'] = 'http://3.129.207.78:3000'
         return response, 200
 
 app.register_blueprint(api)
