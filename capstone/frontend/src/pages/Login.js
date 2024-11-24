@@ -37,7 +37,7 @@ function Login({ setIsAuthenticated }) {
       setShowLoader(false);
     }
     setIsAuthenticated(true);
-    navigate("/users");
+    //navigate("/users");
   };
 
   const handleChange = (e) => {
