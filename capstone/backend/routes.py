@@ -71,7 +71,7 @@ def get_projects():
             for project in projects
         ]
         user_id=None
-        user_id=request.args.get('user_id')
+        user_id=request.args.get('userId')
         if user_id:
             print(get_bookmarks(user_id)[0].json["project_ids"])
             bookmarked_project_ids=set(get_bookmarks(user_id)[0].json["project_ids"])
