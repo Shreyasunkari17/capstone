@@ -356,3 +356,30 @@ def get_featured_projects():
     except Exception as e:
         return jsonify({"error": f"Error getting featured projects: {str(e)}"}), 500
 
+
+# API to delete project
+@api.route('/remove_project', methods=['DELETE'])
+def remove_project():
+    try:
+        data = request.json
+        # user_id = data.get('user_id')
+        project_id = data.get('project_id')
+
+        if not project_id:
+            return jsonify({"error": "project_id is required"}), 400
+
+        # Find the bookmark to delete
+        project_to_delete = Project.query.filter_by(id=project_id).first()
+        if not project_to_delete:
+            return jsonify({"error": "Project not found"}), 404
+
+        # Delete the bookmark
+        db.session.delete(project_to_delete)
+        db.session.commit()
+        return jsonify({"message": "Project removed successfully"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Error removing Project: {str(e)}"}), 500
+
+
+
