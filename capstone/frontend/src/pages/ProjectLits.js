@@ -141,6 +141,9 @@ function ProjectLits({ isAuthenticated }) {
     try {
       const response = await fetch("http://3.129.207.78:5000/api/upload_project", {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(formData),
       });
 
