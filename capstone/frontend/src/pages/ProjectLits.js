@@ -381,7 +381,7 @@ function ProjectLits({ isAuthenticated }) {
     const fetchProjects = async () => {
       setShowLoader(true);
       try {
-        const response = await fetch("http://3.129.207.78:5000/api/projects", {
+        const response = await fetch(`http://3.129.207.78:5000/api/projects?userId=${userId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
