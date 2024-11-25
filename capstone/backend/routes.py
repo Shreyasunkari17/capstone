@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from models import db, User, Project, Media, Department,Bookmark
 import os
+from datetime import date
 api = Blueprint('api', __name__,url_prefix='/api')
 
 def handle_preflight():
