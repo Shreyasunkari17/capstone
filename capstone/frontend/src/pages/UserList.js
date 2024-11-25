@@ -144,16 +144,21 @@ function AllUsers() {
     setOpen(false);
     setShowLoader(true);
     try {
+      const body = {
+        user_id: selectedRecord.id
+      }
       const response = await fetch(
-        `http://3.129.207.78:5000/api/user/${selectedRecord.id}`,
+        `http://3.129.207.78:5000/api/remove_user`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body)
         }
       );
       const data = await response.json();
       setShowLoader(false);
       message.success("User Deleted Successfully");
+      fetchUsers()
     } catch (error) {
       setShowLoader(false);
       message.error("Error while deleting the user");
@@ -255,80 +260,23 @@ function AllUsers() {
     },
   ];
 
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch("http://3.129.207.78:5000/api/users", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch users");
+      }
+
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {}
+  };
+
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await fetch("http://3.129.207.78:5000/api/users", {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch users");
-        }
-
-        const data = await response.json();
-        setUsers(data);
-      } catch (error) {}
-    };
-    // setUsers([
-    //   {
-    //     id: 7,
-    //     name: "Admin",
-    //     email: "admin@example.com",
-    //     role: "Admin",
-    //     department: "Computer Science",
-    //   },
-    //   {
-    //     id: 1,
-    //     name: "Alice Admin",
-    //     email: "alice.admin@example.com",
-    //     role: "Admin",
-    //     department: "Computer Science",
-    //   },
-    //   {
-    //     id: 2,
-    //     name: "Bob Teacher",
-    //     email: "bob.teacher@example.com",
-    //     role: "Teacher",
-    //     department: "Computer Science",
-    //   },
-    //   {
-    //     id: 3,
-    //     name: "Charlie Student",
-    //     email: "charlie.student@example.com",
-    //     role: "Student",
-    //     department: "Computer Science",
-    //   },
-    //   {
-    //     id: 8,
-    //     name: "Shreya",
-    //     email: "shreya@umbc.com",
-    //     role: "Student",
-    //     department: "Electonics",
-    //   },
-    //   {
-    //     id: 9,
-    //     name: "Mani",
-    //     email: "manitest@gmail.com",
-    //     role: "Student",
-    //     department: "Electonics",
-    //   },
-    //   {
-    //     id: 10,
-    //     name: "Sai Kumar",
-    //     email: "sai@gmail.com",
-    //     role: "Student",
-    //     department: "Electonics",
-    //   },
-    //   {
-    //     id: 12,
-    //     name: "Ece",
-    //     email: "ece@ece.com",
-    //     role: "Student",
-    //     department: "Computer Science",
-    //   },
-    // ]);
     fetchUsers();
   }, []);
 
