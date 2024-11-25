@@ -291,6 +291,7 @@ function ProjectLits({ isAuthenticated }) {
         message.error("Failed to add project to favourites");
       } else {
         message.success("Added to favorites successfully");
+        fetchProjects()
       }
       setShowLoader(false);
     } catch (error) {
@@ -322,6 +323,7 @@ function ProjectLits({ isAuthenticated }) {
         message.error("Failed to remove project from favourites");
       } else {
         message.success("Removed project from favorites");
+        fetchProjects()
       }
       setShowLoader(false);
     } catch (error) {
@@ -417,30 +419,30 @@ function ProjectLits({ isAuthenticated }) {
     },
   ];
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      setShowLoader(true);
-      try {
-        const response = await fetch(`http://3.129.207.78:5000/api/projects?userId=${userId}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+  const fetchProjects = async () => {
+    setShowLoader(true);
+    try {
+      const response = await fetch(`http://3.129.207.78:5000/api/projects?userId=${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch projects");
-        }
-
-        const data = await response.json();
-        setProjects(data);
-        setShowLoader(false);
-      } catch (error) {
-        setShowLoader(false);
-        message.error("Failed to load projects. Please try again later.");
+      if (!response.ok) {
+        throw new Error("Failed to fetch projects");
       }
-    };
 
+      const data = await response.json();
+      setProjects(data);
+      setShowLoader(false);
+    } catch (error) {
+      setShowLoader(false);
+      message.error("Failed to load projects. Please try again later.");
+    }
+  };
+
+  useEffect(() => {
     fetchProjects();
   }, []);
 
