@@ -335,14 +335,14 @@ def get_featured_projects():
         if not most_bookmarked:
             return jsonify({"message": "No bookmarks found"}), 200
 
-
+        response=[]
         # Prepare the response data
         for project_id, bookmark_count in most_bookmarked:
             projtect_details_json=get_project_details(project_id)[0].json
             projtect_details_json['bookmark_count']=bookmark_count
-
+            response.append(projtect_details_json)
         
-        return jsonify(projtect_details_json)
+        return jsonify(response[:3])
     except Exception as e:
         return jsonify({"error": f"Error getting featured projects: {str(e)}"}), 500
 
