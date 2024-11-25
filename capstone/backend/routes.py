@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from models import db, User, Project, Media, Department,Bookmark
 import os
 from datetime import date
+
 api = Blueprint('api', __name__,url_prefix='/api')
 
 def handle_preflight():
@@ -12,36 +13,38 @@ def handle_preflight():
         response.headers['Access-Control-Allow-Origin'] = 'http://3.129.207.78:3000'
         return response, 200
 
-# Upload Project
+
+
 @api.route('/upload_project', methods=['POST', 'OPTIONS'])
 def upload_project():
     if request.method == 'OPTIONS':
         return jsonify({'message': 'CORS preflight successful'}), 200
 
     try:
-        data = request.get_json()
-        created_by_user = User.query.get(data['created_by'])  # Fetch the selected user
+        data = request.form
+        file = request.files.get('file')  # Get file from request
 
-        # Create a new project entry
+        required_fields = ['title', 'abstract', 'team_members', 'created_by']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({'message': f'Missing required field: {field}'}), 400
+    
+        created_by_user = User.query.get(data['created_by'])
+        if not created_by_user:
+            return jsonify({'message': 'Invalid user ID'}), 400
         new_project = Project(
             title=data['title'],
             abstract=data['abstract'],
             team_members=data['team_members'],
-            created_by_user=created_by_user  # Set the selected user
+            created_by_user=created_by_user
         )
         db.session.add(new_project)
         db.session.commit()
-
-        if 'file' in request.files:
-            file = request.files['file']
+        if file:
             upload_folder = 'static/uploads'
-
-            if not os.path.exists(upload_folder):
-                os.makedirs(upload_folder)
-
+            os.makedirs(upload_folder, exist_ok=True)
             file_path = os.path.join(upload_folder, file.filename)
             file.save(file_path)
-
             media = Media(
                 project_id=new_project.id,
                 file_name=file.filename,
@@ -50,11 +53,12 @@ def upload_project():
             )
             db.session.add(media)
             db.session.commit()
-
         return jsonify({'message': 'Project uploaded successfully!'}), 200
     except Exception as e:
+        # Log detailed error for debugging
         print(f"Error during project upload: {e}")
-        return jsonify({'message': 'Internal server error'}), 500
+        return jsonify({'message': 'Internal server error', 'error': str(e)}), 500
+
 # Fetch all projects
 @api.route('/projects', methods=['GET'])
 def get_projects():
