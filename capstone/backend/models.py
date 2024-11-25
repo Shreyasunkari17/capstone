@@ -72,4 +72,11 @@ class Media(db.Model):
 
     def __repr__(self):
         return f'<Media {self.file_name} for Project {self.project_id}>'
+class Bookmark(db.Model):
+    __tablename__ = 'bookmarks'
+    user_id = db.Column(db.Integer, primary_key=True)
+    project_id = db.Column(db.String, primary_key=True)
+    created_time = db.Column(db.Date, nullable=True)
+    def __repr__(self):
+        return f'<Media {self.file_name} for Project {self.project_id}>'
 
