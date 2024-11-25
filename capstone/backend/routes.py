@@ -55,7 +55,6 @@ def upload_project():
     except Exception as e:
         print(f"Error during project upload: {e}")
         return jsonify({'message': 'Internal server error'}), 500
-
 # Fetch all projects
 @api.route('/projects', methods=['GET'])
 def get_projects():
@@ -67,10 +66,18 @@ def get_projects():
                 'title': project.title,
                 'department': project.created_by_user.department.name,
                 'abstract':project.abstract,
-                'created_by':project.created_by
+                'favorite':False
             }
             for project in projects
         ]
+        user_id=None
+        user_id=request.args.get('user_id')
+        if user_id:
+            print(get_bookmarks(user_id)[0].json["project_ids"])
+            bookmarked_project_ids=set(get_bookmarks(user_id)[0].json["project_ids"])
+            for project in projects_list:
+                if project["id"] in bookmarked_project_ids:
+                    project["favorite"]=True
         return jsonify(projects_list), 200
     except Exception as e:
         print(f"Error fetching projects: {e}")
@@ -301,11 +308,12 @@ def remove_bookmark():
         db.session.rollback()
         return jsonify({"error": f"Error removing bookmark: {str(e)}"}), 500
 
-@api.route('/get_bookmarks', methods=['GET'])
-def get_bookmarks():
+
+@api.route('/get_bookmarks/<int:user_id>', methods=['GET'])
+def get_bookmarks(user_id):
     try:
         # Extract user_id from the query parameters
-        user_id = request.args.get('user_id')
+        # user_id = request.args.get('user_id')
         if not user_id:
             return jsonify({"error": "user_id is required"}), 400
 
@@ -319,7 +327,6 @@ def get_bookmarks():
         return jsonify({"user_id": user_id, "project_ids": project_ids}), 200
     except Exception as e:
         return jsonify({"error": f"Error removing bookmark: {str(e)}"}), 500
-
 
 @api.route('/get_featured_projects',methods=['GET'])
 def get_featured_projects():
