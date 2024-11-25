@@ -52,16 +52,21 @@ function ProjectLits({ isAuthenticated }) {
     setShowLoader(true);
     setOpen(false);
     try {
+      const body = {
+        project_id: selectedRecord.id
+      }
       const response = await fetch(
-        `http://3.129.207.78:5000/api/project/${selectedRecord.id}`,
+        `http://3.129.207.78:5000/api/remove_project`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body)
         }
       );
       const data = await response.json();
       setShowLoader(false);
       message.success("Project Deleted Successfully");
+      fetchProjects()
     } catch (error) {
       setShowLoader(false);
       message.error("Error while deleting the Project");
