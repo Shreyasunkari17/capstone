@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Button, Typography, Row, Col, Divider, Input } from "antd";
+import React, { useState, useEffect } from "react";
+import { Button, Typography, Row, Col, Divider, Input, Table, message } from "antd";
 import { useNavigate } from "react-router-dom";
 const { Title } = Typography;
 const { Search } = Input;
@@ -7,10 +7,73 @@ const { Search } = Input;
 function Home() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const [featuredProjects, setFeaturedProjects] = useState([]);
 
   const handleSearch = () => {
     navigate(`/projects?search=${searchQuery}`);
   };
+
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+    },
+    {
+      title: "Project Title",
+      dataIndex: "title",
+      sorter: (a, b) => a.title > b.title,
+      render: (text, record, index) => (
+        <Title
+          level={5}
+          onClick={() => navigate(`/project/${record.id}`)}
+          className="project-title-style "
+        >
+          {record.title}
+        </Title>
+      ),
+    },
+    {
+      title: "Department",
+      dataIndex: "department",
+      sorter: (a, b) => a.department > b.department,
+      filterMode: "tree",
+      filterSearch: true,
+      filters: [
+        ...new Map(
+          featuredProjects
+            ?.map(({ department }) => {
+              return { value: department, text: department };
+            })
+            ?.map((item) => [item["text"], item])
+        ).values(),
+      ],
+      onFilter: (value, record) => record.department.startsWith(value),
+    }
+  ];
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch("http://3.129.207.78:5000/api/get_featured_projects", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch featured projects");
+        }
+
+        const data = await response.json();
+        setFeaturedProjects(data);
+      } catch (error) {
+        message.error("Failed to load featured projects. Please try again later.");
+      }
+    };
+
+    fetchProjects();
+  }, []);
 
   return (
     <div className="home-layout">
@@ -74,6 +137,18 @@ function Home() {
           </form>
         </Col>
       </Row>
+      <div className="users-list-layout" style={{ margin: "10px 10%" }}>
+        <Row>
+          <Col span={24}>
+            <Title level={2}>Featured Projects</Title>
+          </Col>
+        </Row>
+        <Table
+          columns={columns}
+          dataSource={featuredProjects}
+          rowSelection={null}
+        />
+      </div>
     </div>
   );
 }
