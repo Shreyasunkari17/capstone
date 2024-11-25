@@ -18,7 +18,7 @@ def upload_project():
         return jsonify({'message': 'CORS preflight successful'}), 200
 
     try:
-        data = request.form
+        data = request.get_json()
         created_by_user = User.query.get(data['created_by'])  # Fetch the selected user
 
         # Create a new project entry
