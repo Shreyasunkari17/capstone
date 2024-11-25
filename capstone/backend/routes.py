@@ -38,7 +38,7 @@ def upload_project():
             if not os.path.exists(upload_folder):
                 os.makedirs(upload_folder)
 
-            file_path = os.path.join(upload_folder, file.name)
+            file_path = os.path.join(upload_folder, file.filename)
             file.save(file_path)
 
             media = Media(
