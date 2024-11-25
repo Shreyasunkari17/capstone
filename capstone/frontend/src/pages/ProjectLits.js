@@ -17,7 +17,7 @@ import {
   UsergroupAddOutlined,
   QuestionCircleOutlined,
   HeartOutlined,
-  HeartFilled
+  HeartFilled,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import CreateProjectForm from "./CreateProjectForm";
@@ -142,17 +142,16 @@ function ProjectLits({ isAuthenticated }) {
     requestBody.append("abstract", formData.abstract);
     requestBody.append("team_members", formData.team_members);
     requestBody.append("created_by", formData.created_by); // Add selected user ID
-
-    console.log("Upload Data",requestBody, formData)
     if (formData.file) requestBody.append("file", formData.file);
+
     try {
-      const response = await fetch("http://3.129.207.78:5000/api/upload_project", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        "http://3.129.207.78:5000/api/upload_project",
+        {
+          method: "POST",
+          body: requestBody,
+        }
+      );
 
       if (response.ok) {
         setFormData({
@@ -190,7 +189,7 @@ function ProjectLits({ isAuthenticated }) {
         `http://3.129.207.78:5000/api/project/${selectedRecord.id}`,
         {
           method: "PUT",
-          body: JSON.stringify(requestBody),
+          body: requestBody,
         }
       );
 
