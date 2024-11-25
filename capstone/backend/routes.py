@@ -66,7 +66,8 @@ def get_projects():
                 'id': project.id,
                 'title': project.title,
                 'department': project.created_by_user.department.name,
-                'abstract':project.abstract
+                'abstract':project.abstract,
+                'created_by':project.created_by
             }
             for project in projects
         ]
