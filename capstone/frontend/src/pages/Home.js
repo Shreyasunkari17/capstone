@@ -48,6 +48,10 @@ function Home() {
         ).values(),
       ],
       onFilter: (value, record) => record.department.startsWith(value),
+    },
+    {
+      title: "Bookmarks",
+      dataIndex: "bookmark_count"
     }
   ];
 
