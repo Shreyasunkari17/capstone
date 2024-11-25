@@ -252,51 +252,97 @@ def login():
         print(f"Error fetching users: {e}")
         return jsonify({'message': 'Internal server error'}), 500
         
-# @api.route('/add_bookmark',methods=['POST'])
-# def add_bookmark():
-#     try:
-#         data = request.get_json()
-#         user_id = data.get('user_id')
-#         project_id = data.get('project_id')
-#         if not user_id or not project_id:
-#             return jsonify({"error": "user_id and project_id are required"}), 400
+@api.route('/add_bookmark',methods=['POST'])
+def add_bookmark():
+    try:
+        data = request.get_json()
+        user_id = data.get('user_id')
+        project_id = data.get('project_id')
+        if not user_id or not project_id:
+            return jsonify({"error": "user_id and project_id are required"}), 400
         
-#         # Check if the bookmark already exists
-#         existing_bookmark = Bookmark.query().filter_by(user_id=user_id, project_id=project_id).first()
-#         if existing_bookmark:
-#             return jsonify({"message": "Bookmark already exists"}), 200
+        # Check if the bookmark already exists
+        existing_bookmark = Bookmark.query.filter_by(user_id=user_id, project_id=project_id).first()
+        if existing_bookmark:
+            return jsonify({"message": "Bookmark already exists"}), 200
         
-#         # Add the new bookmark
-#         new_bookmark = Bookmark(user_id=user_id, project_id=project_id, created_time=date.today())
-#         db.session.add(new_bookmark)
-#         db.session.commit()
-#         return jsonify({"message": "Bookmark added successfully"}), 201
-#     except Exception as e:
-#         db.session.rollback()
-#         return jsonify({"error": f"Error adding bookmark: {str(e)}"}), 500
+        # Add the new bookmark
+        new_bookmark = Bookmark(user_id=user_id, project_id=project_id, created_time=date.today())
+        db.session.add(new_bookmark)
+        db.session.commit()
+        return jsonify({"message": "Bookmark added successfully"}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Error adding bookmark: {str(e)}"}), 500
 
-# @api.route('/remove_bookmark', methods=['DELETE'])
-# def remove_bookmark():
-#     try:
-#         data = request.json
-#         user_id = data.get('user_id')
-#         project_id = data.get('project_id')
+@api.route('/remove_bookmark', methods=['DELETE'])
+def remove_bookmark():
+    try:
+        data = request.json
+        user_id = data.get('user_id')
+        project_id = data.get('project_id')
 
-#         if not user_id or not project_id:
-#             return jsonify({"error": "user_id and project_id are required"}), 400
+        if not user_id or not project_id:
+            return jsonify({"error": "user_id and project_id are required"}), 400
 
-#         # Find the bookmark to delete
-#         bookmark_to_delete = Bookmark.query().filter_by(user_id=user_id, project_id=project_id).first()
-#         if not bookmark_to_delete:
-#             return jsonify({"error": "Bookmark not found"}), 404
+        # Find the bookmark to delete
+        bookmark_to_delete = Bookmark.query.filter_by(user_id=user_id, project_id=project_id).first()
+        if not bookmark_to_delete:
+            return jsonify({"error": "Bookmark not found"}), 404
 
-#         # Delete the bookmark
-#         db.session.delete(bookmark_to_delete)
-#         db.session.commit()
-#         return jsonify({"message": "Bookmark removed successfully"}), 200
-#     except Exception as e:
-#         db.session.rollback()
-#         return jsonify({"error": f"Error removing bookmark: {str(e)}"}), 500
+        # Delete the bookmark
+        db.session.delete(bookmark_to_delete)
+        db.session.commit()
+        return jsonify({"message": "Bookmark removed successfully"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Error removing bookmark: {str(e)}"}), 500
+
+@api.route('/get_bookmarks', methods=['GET'])
+def get_bookmarks():
+    try:
+        # Extract user_id from the query parameters
+        user_id = request.args.get('user_id')
+        if not user_id:
+            return jsonify({"error": "user_id is required"}), 400
+
+        # Query to fetch all bookmarks for the given user_id
+        bookmarks = Bookmark.query.filter_by(user_id=user_id).all()
+        if not bookmarks:
+            return jsonify({"message": "No bookmarks found for the given user_id", "project_ids": []}), 200
+
+        # Extract project_ids from the bookmarks
+        project_ids = [bookmark.project_id for bookmark in bookmarks]
+        return jsonify({"user_id": user_id, "project_ids": project_ids}), 200
+    except Exception as e:
+        return jsonify({"error": f"Error removing bookmark: {str(e)}"}), 500
 
 
+@api.route('/get_featured_projects',methods=['GET'])
+def get_featured_projects():
+    try:
+        # query to fetch most bookmarked projects
+        most_bookmarked = (
+            db.session.query(
+                Bookmark.project_id,
+                db.func.count(Bookmark.user_id).label('bookmark_count')
+            )
+            .group_by(Bookmark.project_id)
+            .order_by(db.func.count(Bookmark.user_id).desc())
+            .all()
+        )
+
+        if not most_bookmarked:
+            return jsonify({"message": "No bookmarks found"}), 200
+
+
+        # Prepare the response data
+        for project_id, bookmark_count in most_bookmarked:
+            projtect_details_json=get_project_details(project_id)[0].json
+            projtect_details_json['bookmark_count']=bookmark_count
+
+        
+        return jsonify(projtect_details_json)
+    except Exception as e:
+        return jsonify({"error": f"Error getting featured projects: {str(e)}"}), 500
 
