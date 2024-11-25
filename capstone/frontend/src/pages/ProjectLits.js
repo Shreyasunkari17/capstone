@@ -16,6 +16,7 @@ import {
   EditOutlined,
   UsergroupAddOutlined,
   QuestionCircleOutlined,
+  HeartOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import CreateProjectForm from "./CreateProjectForm";
@@ -266,6 +267,40 @@ function ProjectLits({ isAuthenticated }) {
     setMode("edit");
   };
 
+  const addToFavourites = async (record) => {
+    setShowLoader(true);
+    try {
+      const user = localStorage.getItem('id')
+      const body = {
+        user_id: parseInt(user),
+        project_id: record.id
+      }
+      const response = await fetch(
+        `http://3.129.207.78:5000/api/add_bookmark`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body)
+        }
+      );
+
+      if (!response.ok) {
+        message.error("Failed to add project to favourites");
+      } else {
+        message.success("Added to favorites successfully");
+      }
+      setShowLoader(false);
+    } catch (error) {
+      setShowLoader(false);
+      message.error("Error adding project to favourites:", error);
+    }
+  };
+
+  const userId = parseInt(localStorage.getItem('id'))
+  const isAdmin = localStorage.getItem('role') == "Admin"
+
   const columns = [
     {
       title: "ID",
@@ -309,13 +344,13 @@ function ProjectLits({ isAuthenticated }) {
       hidden: !isAuthenticated,
       render: (text, record, index) => (
         <>
-          <EditOutlined
+          {(isAdmin || record.created_by == userId) && (<EditOutlined
             onClick={() => {
               fetchProjectDetails(record);
             }}
             className="action-pointers"
-          />
-          <Popconfirm
+          />)}
+          {(isAdmin || record.created_by == userId) && (<Popconfirm
             title="Delete the project"
             open={open && selectedRecord?.id === record.id}
             onOpenChange={(newOpen) => handleOpenChange(newOpen, record)}
@@ -327,7 +362,16 @@ function ProjectLits({ isAuthenticated }) {
             icon={<QuestionCircleOutlined style={{ color: "red" }} />}
           >
             <DeleteOutlined className="action-pointers" />
-          </Popconfirm>
+          </Popconfirm>)}
+          <HeartOutlined
+            title="Add to favourites"
+            onClick={() => {
+              addToFavourites(record);
+            }}
+            className="action-pointers"
+          >
+            <DeleteOutlined className="action-pointers" />
+          </HeartOutlined>
         </>
       ),
     },
