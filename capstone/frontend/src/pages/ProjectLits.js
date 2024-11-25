@@ -17,6 +17,7 @@ import {
   UsergroupAddOutlined,
   QuestionCircleOutlined,
   HeartOutlined,
+  HeartFilled
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import CreateProjectForm from "./CreateProjectForm";
@@ -298,6 +299,37 @@ function ProjectLits({ isAuthenticated }) {
     }
   };
 
+  const removeFromFavourites = async (record) => {
+    setShowLoader(true);
+    try {
+      const user = localStorage.getItem('id')
+      const body = {
+        user_id: parseInt(user),
+        project_id: record.id
+      }
+      const response = await fetch(
+        `http://3.129.207.78:5000/api/remove_bookmark`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body)
+        }
+      );
+
+      if (!response.ok) {
+        message.error("Failed to remove project from favourites");
+      } else {
+        message.success("Removed project from favorites");
+      }
+      setShowLoader(false);
+    } catch (error) {
+      setShowLoader(false);
+      message.error("Error removing project from favourites:", error);
+    }
+  };
+
   const userId = parseInt(localStorage.getItem('id'))
   const isAdmin = localStorage.getItem('role') == "Admin"
 
@@ -363,7 +395,15 @@ function ProjectLits({ isAuthenticated }) {
           >
             <DeleteOutlined className="action-pointers" />
           </Popconfirm>)}
-          <HeartOutlined
+          {record.favorite ? (<HeartFilled
+            title="Remove from favourites"
+            onClick={() => {
+              removeFromFavourites(record);
+            }}
+            className="action-pointers"
+          >
+            <DeleteOutlined className="action-pointers" />
+          </HeartFilled>) : (<HeartOutlined
             title="Add to favourites"
             onClick={() => {
               addToFavourites(record);
@@ -371,7 +411,7 @@ function ProjectLits({ isAuthenticated }) {
             className="action-pointers"
           >
             <DeleteOutlined className="action-pointers" />
-          </HeartOutlined>
+          </HeartOutlined>)}
         </>
       ),
     },
@@ -399,69 +439,6 @@ function ProjectLits({ isAuthenticated }) {
         setShowLoader(false);
         message.error("Failed to load projects. Please try again later.");
       }
-
-      // setProjects([
-      //   {
-      //     department: "Computer Science",
-      //     id: 1,
-      //     title: "Real Time Analysis ",
-      //   },
-      //   {
-      //     department: "Computer Science",
-      //     id: 2,
-      //     title: "Driverless Car",
-      //   },
-      //   {
-      //     department: "Computer Science",
-      //     id: 3,
-      //     title: "IOT",
-      //   },
-      //   {
-      //     department: "Computer Science",
-      //     id: 4,
-      //     title: "Cloud Migration automation",
-      //   },
-      //   {
-      //     department: "Computer Science",
-      //     id: 5,
-      //     title: "System Links",
-      //   },
-      //   {
-      //     department: "Computer Science",
-      //     id: 6,
-      //     title: "Restaurant Orderting",
-      //   },
-      //   {
-      //     department: "Computer Science",
-      //     id: 7,
-      //     title: "Test",
-      //   },
-      //   {
-      //     department: "Computer Science",
-      //     id: 9,
-      //     title: "Capstone Project",
-      //   },
-      //   {
-      //     department: "Computer Science",
-      //     id: 10,
-      //     title: "Capstone2",
-      //   },
-      //   {
-      //     department: "Computer Science",
-      //     id: 11,
-      //     title: "Sai Kumar uSer upload test",
-      //   },
-      //   {
-      //     department: "Electronics",
-      //     id: 13,
-      //     title: "ece",
-      //   },
-      //   {
-      //     department: "Computer Science",
-      //     id: 14,
-      //     title: "Project Elect",
-      //   },
-      // ]);
     };
 
     fetchProjects();
