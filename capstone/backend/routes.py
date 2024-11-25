@@ -59,7 +59,6 @@ def upload_project():
         print(f"Error during project upload: {e}")
         return jsonify({'message': 'Internal server error', 'error': str(e)}), 500
 
-# Fetch all projects
 @api.route('/projects', methods=['GET'])
 def get_projects():
     try:
@@ -69,19 +68,22 @@ def get_projects():
                 'id': project.id,
                 'title': project.title,
                 'department': project.created_by_user.department.name,
-                'abstract':project.abstract,
-                'favorite':False
+                'abstract': project.abstract,
+                'favorite': False
             }
             for project in projects
         ]
-        user_id=None
-        user_id=request.args.get('userId')
-        if user_id:
-            print(get_bookmarks(user_id)[0].json["project_ids"])
-            bookmarked_project_ids=set(get_bookmarks(user_id)[0].json["project_ids"])
-            for project in projects_list:
-                if project["id"] in bookmarked_project_ids:
-                    project["favorite"]=True
+        user_id = request.args.get('userId')
+
+        if user_id and user_id.lower() != 'nan' and user_id.strip():
+            try:
+                
+                bookmarked_project_ids = set(get_bookmarks(user_id)[0].json["project_ids"])
+                for project in projects_list:
+                    if project["id"] in bookmarked_project_ids:
+                        project["favorite"] = True
+            except Exception as e:
+                print(f"Error processing bookmarks for user {user_id}: {e}")
         return jsonify(projects_list), 200
     except Exception as e:
         print(f"Error fetching projects: {e}")
