@@ -382,4 +382,30 @@ def remove_project():
         return jsonify({"error": f"Error removing Project: {str(e)}"}), 500
 
 
+# API to delete user
+@api.route('/remove_user', methods=['DELETE'])
+def remove_user():
+    try:
+        data = request.json
+        user_id = data.get('user_id')
+        # project_id = data.get('project_id')
+
+        if not user_id:
+            return jsonify({"error": "user_id is required"}), 400
+
+        # Find the user to delete
+        user_to_delete = User.query.filter_by(id=user_id).first()
+        if not user_to_delete:
+            return jsonify({"error": "User not found"}), 404
+
+        # Delete the user
+        db.session.delete(user_to_delete)
+        db.session.commit()
+        return jsonify({"message": "User removed successfully"}), 200
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Error removing User: {str(e)}"}), 500
+
+
+
 
