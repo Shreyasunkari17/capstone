@@ -77,12 +77,16 @@ function CreateProjectForm({
         </Col>
         <Col span={24} className="mb-4">
           <label className="block mb-2">Project File:</label>
-          <input
-            type="file"
-            onChange={(e) => 
-              setFormData({ ...formData, file: e.target.files[0] })}
-            className="w-full px-4 py-2 border rounded-lg"
-          />
+          <Upload
+            value={formData.file}
+            maxCount={1}
+            multiple={false}
+            onChange={(e) => {
+              setFormData({ ...formData, file: e.file });
+            }}
+          >
+            <Button icon={<UploadOutlined />}>Select File</Button>
+          </Upload>
           {mode === "edit" && formData.file && (
             <a
               target="_blank"
