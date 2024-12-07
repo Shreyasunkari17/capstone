@@ -14,6 +14,10 @@ function CreateProjectForm({
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const years = [2020,2021,2022,2023,2024,2025]
+
+  const sponsors = ['MNM', 'DNM', 'VNM']
+
   return (
     <form>
       <Row className="mb-4">
@@ -37,14 +41,29 @@ function CreateProjectForm({
             maxLength={1000000}
           />
         </Col>
-        <Col span={24} className="mb-4">
+        <Col span={12} className="mb-4">
           <label className="block mb-2">Team Members:</label>
           <Input
             placeholder="Enter Title"
+            style={{ width: "98%" }}
             value={formData.team_members}
             onChange={handleChange}
             name="team_members"
             maxLength={200}
+          />
+        </Col>
+        <Col span={12} className="mb-4">
+          <label className="block mb-2">Sponsor:</label>
+          <Select
+            value={formData?.sponsor}
+            style={{ width: "98%" }}
+            allowClear
+            options={sponsors?.map((s) => {
+              return { value: s, label: s };
+            })}
+            name="sponsor"
+            onChange={(e) => setFormData({ ...formData, sponsor: e })}
+            placeholder="Select Sponsor"
           />
         </Col>
         <Col span={12} className="mb-4">
@@ -62,17 +81,17 @@ function CreateProjectForm({
           />
         </Col>
         <Col span={12} className="mb-4">
-          <label className="block mb-2">Department:</label>
+          <label className="block mb-2">Year:</label>
           <Select
-            value={formData?.department}
+            value={formData?.year}
             style={{ width: "98%" }}
             allowClear
-            options={departments?.map(({ id, name }) => {
-              return { value: id, label: name };
+            options={years?.map((year) => {
+              return { value: year, label: year };
             })}
-            name="department"
-            onChange={(e) => setFormData({ ...formData, department: e })}
-            placeholder="Select Department"
+            name="year"
+            onChange={(e) => setFormData({ ...formData, year: e })}
+            placeholder="Select Year"
           />
         </Col>
         <Col span={24} className="mb-4">
