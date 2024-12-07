@@ -111,7 +111,10 @@ def get_project_details(project_id):
                 }
                 for media in project.media_files
                 if media.file_path not in seen_media and not seen_media.add(media.file_path) 
-            ]
+            ],
+            'sponsor':project.sponsor,
+            'is_featured': project.is_featured,
+            'favorite':False
         }
 
         return jsonify(project_details), 200
