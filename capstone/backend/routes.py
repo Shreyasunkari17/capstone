@@ -27,7 +27,10 @@ def upload_project():
             title=data['title'],
             abstract=data['abstract'],
             team_members=data['team_members'],
-            created_by_user=created_by_user  # Set the selected user
+            created_by_user=created_by_user,  # Set the selected user
+            year=data.get('year'),
+            sponsor=data.get('sponsor'),
+            is_featured=False
         )
         db.session.add(new_project)
         db.session.commit()
