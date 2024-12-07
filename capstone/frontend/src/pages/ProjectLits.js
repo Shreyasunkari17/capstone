@@ -17,7 +17,9 @@ import {
   UsergroupAddOutlined,
   QuestionCircleOutlined,
   HeartOutlined,
-  HeartFilled
+  HeartFilled,
+  BookOutlined,
+  BookFilled
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import CreateProjectForm from "./CreateProjectForm";
@@ -39,6 +41,9 @@ function ProjectLits({ isAuthenticated }) {
     team_members: "",
     created_by: "",
     department: "",
+    year: "",
+    sponsor: "",
+    is_featured: false,
     file: "",
   });
   const [showLoader, setShowLoader] = useState(false);
@@ -337,6 +342,70 @@ function ProjectLits({ isAuthenticated }) {
     }
   };
 
+  const addToFeatured = async (record) => {
+    setShowLoader(true);
+    try {
+      const user = localStorage.getItem('id')
+      const body = {
+        user_id: parseInt(user),
+        project_id: record.id
+      }
+      const response = await fetch(
+        `http://3.129.207.78:5000/api/add_featured`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body)
+        }
+      );
+
+      if (!response.ok) {
+        message.error("Failed to add project to featured list");
+      } else {
+        message.success("Added to featured list successfully");
+        fetchProjects()
+      }
+      setShowLoader(false);
+    } catch (error) {
+      setShowLoader(false);
+      message.error("Error adding project to featured list:", error);
+    }
+  };
+
+  const removeFromFeatured = async (record) => {
+    setShowLoader(true);
+    try {
+      const user = localStorage.getItem('id')
+      const body = {
+        user_id: parseInt(user),
+        project_id: record.id
+      }
+      const response = await fetch(
+        `http://3.129.207.78:5000/api/remove_featured`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body)
+        }
+      );
+
+      if (!response.ok) {
+        message.error("Failed to remove project from featured list");
+      } else {
+        message.success("Removed project from featured list");
+        fetchProjects()
+      }
+      setShowLoader(false);
+    } catch (error) {
+      setShowLoader(false);
+      message.error("Error removing project from featured list:", error);
+    }
+  };
+
   const userId = parseInt(localStorage.getItem('id'))
   const isAdmin = localStorage.getItem('role') == "Admin"
 
@@ -360,6 +429,23 @@ function ProjectLits({ isAuthenticated }) {
       ),
     },
     {
+      title: "Year",
+      dataIndex: "year",
+      sorter: (a, b) => a.year > b.year,
+      filterMode: "tree",
+      filterSearch: true,
+      filters: [
+        ...new Map(
+          projects
+            ?.map(({ year }) => {
+              return { value: year, text: year };
+            })
+            ?.map((item) => [item["text"], item])
+        ).values(),
+      ],
+      onFilter: (value, record) => record.year === value,
+    },
+    {
       title: "Department",
       dataIndex: "department",
       sorter: (a, b) => a.department > b.department,
@@ -375,6 +461,23 @@ function ProjectLits({ isAuthenticated }) {
         ).values(),
       ],
       onFilter: (value, record) => record.department.startsWith(value),
+    },
+    {
+      title: "Sponsor",
+      dataIndex: "sponsor",
+      sorter: (a, b) => a.sponsor > b.sponsor,
+      filterMode: "tree",
+      filterSearch: true,
+      filters: [
+        ...new Map(
+          projects
+            ?.map(({ sponsor }) => {
+              return { value: sponsor, text: sponsor };
+            })
+            ?.map((item) => [item["text"], item])
+        ).values(),
+      ],
+      onFilter: (value, record) => record.sponsor.startsWith(value),
     },
     {
       title: "Action",
@@ -402,7 +505,7 @@ function ProjectLits({ isAuthenticated }) {
           >
             <DeleteOutlined className="action-pointers" />
           </Popconfirm>)}
-          {record.favorite ? (<HeartFilled
+          {record.favorite ? (!isAdmin && <HeartFilled
             title="Remove from favourites"
             onClick={() => {
               removeFromFavourites(record);
@@ -410,7 +513,7 @@ function ProjectLits({ isAuthenticated }) {
             className="action-pointers"
           >
             <DeleteOutlined className="action-pointers" />
-          </HeartFilled>) : (<HeartOutlined
+          </HeartFilled>) : (!isAdmin && <HeartOutlined
             title="Add to favourites"
             onClick={() => {
               addToFavourites(record);
@@ -419,6 +522,23 @@ function ProjectLits({ isAuthenticated }) {
           >
             <DeleteOutlined className="action-pointers" />
           </HeartOutlined>)}
+          {record.is_featured ? (isAdmin && <BookFilled
+            title="Remove as featured"
+            onClick={() => {
+              removeFromFeatured(record);
+            }}
+            className="action-pointers"
+          >
+            <DeleteOutlined className="action-pointers" />
+          </BookFilled>) : (isAdmin && <BookOutlined
+            title="Mark as featured"
+            onClick={() => {
+              addToFeatured(record);
+            }}
+            className="action-pointers"
+          >
+            <DeleteOutlined className="action-pointers" />
+          </BookOutlined>)}
         </>
       ),
     },
