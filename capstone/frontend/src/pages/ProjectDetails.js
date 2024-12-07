@@ -86,6 +86,12 @@ function ProjectDetails() {
         </Col>
         <Col span={24}>
           <Title level={5}>
+            <b>Sponsor: </b>
+            {project.sponsor}
+          </Title>
+        </Col>
+        <Col span={24}>
+          <Title level={5}>
             <b>Department: </b>
             {project.department}
           </Title>
@@ -94,6 +100,12 @@ function ProjectDetails() {
           <Title level={5}>
             <b>Created By: </b>
             {project.created_by.name}
+          </Title>
+        </Col>
+        <Col span={24}>
+          <Title level={5}>
+            <b>Year: </b>
+            {project.year}
           </Title>
         </Col>
         <Col span={24}>
