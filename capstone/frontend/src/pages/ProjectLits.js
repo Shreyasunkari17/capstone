@@ -107,6 +107,9 @@ function ProjectLits({ isAuthenticated }) {
       team_members: "",
       created_by: "",
       department: "",
+      year: "",
+      sponsor: "",
+      is_featured: false,
       file: "",
     });
     setSelectedRecord(null);
@@ -166,6 +169,9 @@ function ProjectLits({ isAuthenticated }) {
           team_members: "",
           created_by: "",
           department: "",
+          year: "",
+          sponsor: "",
+          is_featured: false,
           file: "",
         });
         setOpenModal(false);
@@ -206,6 +212,9 @@ function ProjectLits({ isAuthenticated }) {
           team_members: "",
           created_by: "",
           department: "",
+          year: "",
+          sponsor: "",
+          is_featured: false,
           file: "",
         });
         setOpenModal(false);
@@ -271,6 +280,9 @@ function ProjectLits({ isAuthenticated }) {
       team_members: projectData.team_members.join(", "),
       created_by: projectData.created_by.name,
       department: projectData.department,
+      year: projectData.year,
+      sponsor: projectData.sponsor,
+      is_featured: projectData.is_featured,
       file: projectData.media_files[0],
     });
     setSelectedRecord(projectData);
