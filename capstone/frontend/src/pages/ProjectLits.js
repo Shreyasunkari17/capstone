@@ -234,6 +234,7 @@ function ProjectLits({ isAuthenticated }) {
   };
 
   const fetchProjectDetails = async (record) => {
+    let projectData 
     setShowLoader(true);
     try {
       const response = await fetch(
@@ -250,28 +251,29 @@ function ProjectLits({ isAuthenticated }) {
         message.error("Failed to fetch project details");
       }
       const data = await response.json();
+      projectData = data
       setShowLoader(false);
     } catch (error) {
       setShowLoader(false);
       message.error("Error fetching project details:", error);
     }
-    let projectData = {
-      abstract: "Real Time Analysis of Live Data",
-      created_by: {
-        email: "alice.admin@example.com",
-        name: "Alice Admin",
-      },
-      department: "Computer Science",
-      id: 1,
-      media_files: [
-        {
-          file_name: "report.pdf",
-          file_path: "/files/project_a/report.pdf",
-        },
-      ],
-      team_members: ["John", "Jane"],
-      title: "Real Time Analysis ",
-    };
+    // let projectData = {
+    //   abstract: "Real Time Analysis of Live Data",
+    //   created_by: {
+    //     email: "alice.admin@example.com",
+    //     name: "Alice Admin",
+    //   },
+    //   department: "Computer Science",
+    //   id: 1,
+    //   media_files: [
+    //     {
+    //       file_name: "report.pdf",
+    //       file_path: "/files/project_a/report.pdf",
+    //     },
+    //   ],
+    //   team_members: ["John", "Jane"],
+    //   title: "Real Time Analysis ",
+    // };
     await fetchDepartments();
     await fetchUsers();
     setFormData({
