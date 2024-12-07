@@ -334,30 +334,32 @@ def get_bookmarks(user_id):
 @api.route('/get_featured_projects',methods=['GET'])
 def get_featured_projects():
     try:
-        # query to fetch most bookmarked projects
-        most_bookmarked = (
-            db.session.query(
-                Bookmark.project_id,
-                db.func.count(Bookmark.user_id).label('bookmark_count')
-            )
-            .group_by(Bookmark.project_id)
-            .order_by(db.func.count(Bookmark.user_id).desc())
-            .all()
-        )
-
-        if not most_bookmarked:
-            return jsonify({"message": "No bookmarks found"}), 200
-
-        response=[]
-        # Prepare the response data
-        for project_id, bookmark_count in most_bookmarked:
-            projtect_details_json=get_project_details(project_id)[0].json
-            projtect_details_json['bookmark_count']=bookmark_count
-            response.append(projtect_details_json)
-        
-        return jsonify(response[:3])
+        projects = Project.query.filter_by(is_featured=True).all()
+        projects_list = [
+            {
+                'id': project.id,
+                'title': project.title,
+                'department': project.created_by_user.department.name,
+                'abstract':project.abstract,
+                'year':project.year,
+                'sponsor':project.sponsor,
+                'is_featured': project.is_featured,
+                'favorite':False
+            }
+            for project in projects
+        ]
+        user_id=None
+        user_id=request.args.get('userId')
+        if user_id:
+            print(get_bookmarks(user_id)[0].json["project_ids"])
+            bookmarked_project_ids=set(get_bookmarks(user_id)[0].json["project_ids"])
+            for project in projects_list:
+                if project["id"] in bookmarked_project_ids:
+                    project["favorite"]=True
+        return jsonify(projects_list), 200
     except Exception as e:
-        return jsonify({"error": f"Error getting featured projects: {str(e)}"}), 500
+        print(f"Error fetching projects: {e}")
+        return jsonify({'message': 'Internal server error'}), 500
 
 
 # API to delete project
@@ -408,6 +410,48 @@ def remove_user():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": f"Error removing User: {str(e)}"}), 500
+
+@api.route('/add_featured',methods=['POST'])
+def add_featured():
+    try:
+        data = request.get_json()
+        project_id = data.get('project_id')
+        if not project_id:
+            return jsonify({"error": "project_id is required"}), 400
+        
+        # Check if the bookmark already exists
+        project = Project.query.filter_by( id=project_id).first()
+        if not project:
+            return jsonify({"message": "Project doesn't exist"}), 400
+        project.is_featured=True
+
+        db.session.commit()
+        return jsonify({"message": f"project {project_id} is made featured"}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Error adding featured: {str(e)}"}), 500
+
+@api.route('/remove_featured', methods=['POST'])
+def remove_featured():
+    try:
+        data = request.get_json()
+        # user_id = data.get('user_id')
+        project_id = data.get('project_id')
+        if  not project_id:
+            return jsonify({"error": "project_id is required"}), 400
+        
+        # Check if the bookmark already exists
+        project = Project.query.filter_by(id=project_id).first()
+        if not project:
+            return jsonify({"message": "Project doesn't exist"}), 400
+        project.is_featured=False   #set bookmark to false
+
+        db.session.commit()
+        return jsonify({"message": f"{project_id} is made featured"}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": f"Error adding featured: {str(e)}"}), 500
+
 
 
 
