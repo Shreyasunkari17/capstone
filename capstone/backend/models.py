@@ -45,7 +45,9 @@ class Project(db.Model):
     team_members = db.Column(db.Text) 
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-
+    year = db.Column(db.Integer, nullable=False)
+    sponsor = db.Column(db.Text, nullable=False)
+    is_featured = db.Column(db.Boolean, nullable=True)
     created_by_user = db.relationship('User', backref='projects_created', lazy=True)
 
     media_files = db.relationship('Media', backref='project', lazy=True)
