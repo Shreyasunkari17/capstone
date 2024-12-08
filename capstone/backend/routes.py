@@ -37,7 +37,7 @@ def upload_project():
 
         if 'file' in request.files:
             file = request.files['file']
-            upload_folder = '/home/ubuntu/static/uploads'
+            upload_folder = '/home/ubuntu/capstone/capstone/backend/static/uploads'
 
             if not os.path.exists(upload_folder):
                 os.makedirs(upload_folder)
