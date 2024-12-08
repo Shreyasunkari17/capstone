@@ -14,11 +14,11 @@ function App() {
     localStorage.getItem("name") !== "" && localStorage.getItem("name") !== null
   );
   const [mode, setMode] = useState(
-    location.pathname.includes("/user") ? "users" : "projects"
+    location.pathname.includes("/user") ? "users" : location.pathname.includes("/my-projects") ?  "my-projects" : "projects"
   );
 
   useEffect(() => {
-    setMode(location.pathname.includes("/user") ? "users" : "projects")
+    setMode(location.pathname.includes("/user") ? "users" : location.pathname.includes("/my-projects") ?  "my-projects" : "projects")
   },[location])
 
   const handleModeChange = (e) => {
@@ -26,22 +26,22 @@ function App() {
     navigate(`/${e.target.value}`);
   };
 
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      try {
-        const response = await fetch("/api/auth_status", {
-          credentials: "include",
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setIsAuthenticated(data.authenticated);
-        }
-      } catch (error) {
-        console.error("Error checking auth status:", error);
-      }
-    };
-    checkAuthStatus();
-  }, []);
+  // useEffect(() => {
+  //   const checkAuthStatus = async () => {
+  //     try {
+  //       const response = await fetch("/api/auth_status", {
+  //         credentials: "include",
+  //       });
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         setIsAuthenticated(data.authenticated);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error checking auth status:", error);
+  //     }
+  //   };
+  //   checkAuthStatus();
+  // }, []);
 
   return (
     <Layout>
@@ -55,7 +55,7 @@ function App() {
         <Content>
           {isAuthenticated &&
             (location.pathname.includes("/user") ||
-              location.pathname.includes("/project")) && (
+              location.pathname.includes("/project") || location.pathname.includes("/my-project")) && (
               <Radio.Group
                 className="dashboard-tabs"
                 onChange={handleModeChange}
@@ -69,6 +69,9 @@ function App() {
                 )}
                 <Radio.Button value="projects" className="dashboard-tabs">
                   Projects
+                </Radio.Button>
+                <Radio.Button value="my-projects" className="dashboard-tabs">
+                  My Projects
                 </Radio.Button>
               </Radio.Group>
             )}
