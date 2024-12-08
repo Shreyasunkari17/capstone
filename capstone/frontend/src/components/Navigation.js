@@ -15,22 +15,22 @@ import "../index.css";
 
 function Navigation({isAuthenticated, setIsAuthenticated}) {
 
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      try {
-        const response = await fetch("/api/auth_status", {
-          credentials: "include",
-        });
-        if (response.ok) {
-          const data = await response.json();
-          setIsAuthenticated(data.authenticated);
-        }
-      } catch (error) {
-        console.error("Error checking auth status:", error);
-      }
-    };
-    checkAuthStatus();
-  }, []);
+  // useEffect(() => {
+  //   const checkAuthStatus = async () => {
+  //     try {
+  //       const response = await fetch("/api/auth_status", {
+  //         credentials: "include",
+  //       });
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         setIsAuthenticated(data.authenticated);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error checking auth status:", error);
+  //     }
+  //   };
+  //   checkAuthStatus();
+  // }, []);
 
   return (
     <div className="App min-h-screen bg-gray-100">
@@ -39,6 +39,10 @@ function Navigation({isAuthenticated, setIsAuthenticated}) {
         <Route path="/home" element={<Home />} />
         <Route
           path="/projects"
+          element={<ProjectLits isAuthenticated={isAuthenticated} />}
+        />
+        <Route
+          path="/my-projects"
           element={<ProjectLits isAuthenticated={isAuthenticated} />}
         />
         <Route path="/project/:projectId" element={<ProjectDetails />} />{" "}
