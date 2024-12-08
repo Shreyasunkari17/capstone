@@ -360,7 +360,7 @@ def get_featured_projects():
                 'sponsor':project.sponsor,
                 'is_featured': project.is_featured,
                 'favorite':False,
-                'no_of_views':prjoect.no_of_views//2
+                'no_of_views':project.no_of_views//2
             }
             for project in projects
         ]
