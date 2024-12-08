@@ -630,7 +630,7 @@ function ProjectLits({ isAuthenticated }) {
       <Table
         columns={columns}
         dataSource={projects?.filter((val) =>
-          val?.title?.toLowerCase().includes(searchQuery?.toLowerCase())
+          (val?.title?.toLowerCase().includes(searchQuery?.toLowerCase()) || val?.abstract?.toLowerCase().includes(searchQuery?.toLowerCase()))
         )}
         rowSelection={null}
       />
