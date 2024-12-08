@@ -567,6 +567,10 @@ function ProjectLits({ isAuthenticated }) {
         </>
       ),
     },
+    {
+      title: "Views",
+      dataIndex: "no_of_views",
+    }
   ];
 
   const fetchProjects = async () => {
