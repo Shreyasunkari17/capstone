@@ -73,7 +73,7 @@ def get_projects():
                 'sponsor':project.sponsor,
                 'is_featured': project.is_featured,
                 'favorite':False,
-                'no_of_views':project.no_of_views
+                'no_of_views': project.no_of_views//2
             }
             for project in projects
         ]
@@ -120,7 +120,7 @@ def get_project_details(project_id):
             'sponsor':project.sponsor,
             'is_featured': project.is_featured,
             'favorite':False,
-            'no_of_views':project.no_of_views
+            'no_of_views':project.no_of_views//2
         }
 
         #adding the no.of views
@@ -359,7 +359,8 @@ def get_featured_projects():
                 'year':project.year,
                 'sponsor':project.sponsor,
                 'is_featured': project.is_featured,
-                'favorite':False
+                'favorite':False,
+                'no_of_views':prjoect.no_of_views//2
             }
             for project in projects
         ]
