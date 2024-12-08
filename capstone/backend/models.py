@@ -48,6 +48,7 @@ class Project(db.Model):
     year = db.Column(db.Integer, nullable=False)
     sponsor = db.Column(db.Text, nullable=False)
     is_featured = db.Column(db.Boolean, nullable=True)
+    no_of_views = db.Column(db.Integer, default=0, nullable=False)
     created_by_user = db.relationship('User', backref='projects_created', lazy=True)
 
     media_files = db.relationship('Media', backref='project', lazy=True)
