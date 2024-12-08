@@ -19,14 +19,14 @@ def upload_project():
         return jsonify({'message': 'CORS preflight successful'}), 200
 
     try:
-        data = request.get_json()
+        data = request.form
         created_by_user = User.query.get(data['created_by'])  # Fetch the selected user
 
         # Create a new project entry
         new_project = Project(
             title=data['title'],
             abstract=data['abstract'],
-            team_members=data['team_members'],
+            team_members=data['team_members'],  #TODO: expect a list
             created_by_user=created_by_user,  # Set the selected user
             year=data.get('year'),
             sponsor=data.get('sponsor'),
@@ -37,7 +37,7 @@ def upload_project():
 
         if 'file' in request.files:
             file = request.files['file']
-            upload_folder = 'static/uploads'
+            upload_folder = '~/static/uploads'
 
             if not os.path.exists(upload_folder):
                 os.makedirs(upload_folder)
