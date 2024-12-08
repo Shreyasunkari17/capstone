@@ -72,7 +72,8 @@ def get_projects():
                 'year':project.year,
                 'sponsor':project.sponsor,
                 'is_featured': project.is_featured,
-                'favorite':False
+                'favorite':False,
+                'no_of_views':project.no_of_views
             }
             for project in projects
         ]
