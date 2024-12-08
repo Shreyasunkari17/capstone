@@ -6,7 +6,8 @@ import {
   Col,
 } from "antd";
 import {
-  ArrowLeftOutlined
+  ArrowLeftOutlined,
+  EyeOutlined
 } from "@ant-design/icons";
 const { Title } = Typography;
 
@@ -71,6 +72,12 @@ function ProjectDetails() {
       <Row>
         <Col span={24}>
           <Title level={3}>{project.title}</Title>
+        </Col>
+        <Col span={24}>
+          <Title level={5}>
+            <b>Views: </b>
+            {project.no_of_views}
+          </Title>
         </Col>
         <Col span={24}>
           <Title level={5}>
