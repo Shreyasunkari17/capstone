@@ -37,7 +37,7 @@ def upload_project():
 
         if 'file' in request.files:
             file = request.files['file']
-            upload_folder = '/home/ubuntu/capstone/capstone/backend/static/uploads'
+            upload_folder = '~/static/uploads'
 
             if not os.path.exists(upload_folder):
                 os.makedirs(upload_folder)
@@ -49,7 +49,7 @@ def upload_project():
                 project_id=new_project.id,
                 file_name=file.filename,
                 file_type=file.content_type,
-                file_path=os.path.join("/static/uploads", file.filename)
+                file_path=file_path
             )
             db.session.add(media)
             db.session.commit()
@@ -118,8 +118,14 @@ def get_project_details(project_id):
             'year':project.year,
             'sponsor':project.sponsor,
             'is_featured': project.is_featured,
-            'favorite':False
+            'favorite':False,
+            'no_of_views':project.no_of_views
         }
+
+        #adding the no.of views
+        project.no_of_views = project.no_of_views + 1  # Increment by 1
+        db.session.commit()
+
 
         return jsonify(project_details), 200
     except Exception as e:
@@ -319,6 +325,7 @@ def remove_bookmark():
         return jsonify({"error": f"Error removing bookmark: {str(e)}"}), 500
 
 
+#using project id instead of user id
 @api.route('/get_bookmarks/<int:user_id>', methods=['GET'])
 def get_bookmarks(user_id):
     try:
@@ -363,6 +370,11 @@ def get_featured_projects():
             for project in projects_list:
                 if project["id"] in bookmarked_project_ids:
                     project["favorite"]=True
+        for project in projects_list:
+            project_id = project['id']
+            bookmark_count = db.session.query(Bookmark).filter_by(project_id=project_id).count()
+            project["bookmark_count"]=bookmark_count if bookmark_count else 0
+
         return jsonify(projects_list), 200
     except Exception as e:
         print(f"Error fetching projects: {e}")
