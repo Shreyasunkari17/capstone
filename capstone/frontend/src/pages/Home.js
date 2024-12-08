@@ -52,6 +52,10 @@ function Home() {
     {
       title: "Bookmarks",
       dataIndex: "bookmark_count"
+    },
+    {
+      title: "Views",
+      dataIndex: "no_of_views"
     }
   ];
 
