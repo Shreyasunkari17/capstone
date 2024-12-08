@@ -44,7 +44,7 @@ function ProjectLits({ isAuthenticated }) {
     year: "",
     sponsor: "",
     is_featured: false,
-    file: "",
+    file: null,
   });
   const [showLoader, setShowLoader] = useState(false);
   const urlParams = new URLSearchParams(window.location.search);
@@ -110,7 +110,7 @@ function ProjectLits({ isAuthenticated }) {
       year: "",
       sponsor: "",
       is_featured: false,
-      file: "",
+      file: null,
     });
     setSelectedRecord(null);
   };
@@ -146,23 +146,32 @@ function ProjectLits({ isAuthenticated }) {
   const handleOk = async () => {
     setShowLoader(true);
     const requestBody = new FormData();
+  
+    // Append all form fields to FormData
     requestBody.append("title", formData.title);
     requestBody.append("abstract", formData.abstract);
     requestBody.append("team_members", formData.team_members);
+    requestBody.append("year", formData.year);
+    requestBody.append("sponsor", formData.sponsor);
     requestBody.append("created_by", formData.created_by); // Add selected user ID
-
-    console.log("Upload Data",requestBody, formData)
-    if (formData.file) requestBody.append("file", formData.file);
+  
+    // If file is selected, append it to FormData
+    if (formData.file) {
+      requestBody.append("file", formData.file);
+    }
+  
+    // Log the FormData before sending it
+    console.log("FormData to be sent:", requestBody);
+  
     try {
       const response = await fetch("http://3.129.207.78:5000/api/upload_project", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+        body: requestBody, // Send the FormData object directly
+        // Do not set the Content-Type header. The browser will do that for you.
       });
-
+  
       if (response.ok) {
+        // Reset form data on success
         setFormData({
           title: "",
           abstract: "",
@@ -172,7 +181,7 @@ function ProjectLits({ isAuthenticated }) {
           year: "",
           sponsor: "",
           is_featured: false,
-          file: "",
+          file: null,
         });
         setOpenModal(false);
         setSelectedRecord(null);
@@ -185,8 +194,10 @@ function ProjectLits({ isAuthenticated }) {
     } catch (error) {
       setShowLoader(false);
       console.error("Error creating project:", error);
+      message.error("Error while submitting the form");
     }
   };
+  
 
   const handleSubmit = async () => {
     setShowLoader(true);
@@ -215,7 +226,7 @@ function ProjectLits({ isAuthenticated }) {
           year: "",
           sponsor: "",
           is_featured: false,
-          file: "",
+          file: null,
         });
         setOpenModal(false);
         setSelectedRecord(null);
