@@ -70,9 +70,10 @@ function App() {
                 <Radio.Button value="projects" className="dashboard-tabs">
                   Projects
                 </Radio.Button>
-                <Radio.Button value="my-projects" className="dashboard-tabs">
+                {localStorage.getItem("role") !== "Admin" && (<Radio.Button value="my-projects" className="dashboard-tabs">
                   My Projects
                 </Radio.Button>
+                )}
               </Radio.Group>
             )}
           <Navigation isAuthenticated={isAuthenticated}
