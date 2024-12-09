@@ -74,13 +74,14 @@ def get_projects():
                 'is_featured': project.is_featured,
                 'favorite':False,
                 'no_of_views': project.no_of_views//2,
-                'created_by':project.created_by
+                'created_by':project.created_by,
+                'favorite':False,
             }
             for project in projects
         ]
         user_id=None
         user_id=request.args.get('userId')
-        if user_id:
+        if user_id and user_id.lower() != 'nan' and user_id.strip():
             print(get_bookmarks(user_id)[0].json["project_ids"])
             bookmarked_project_ids=set(get_bookmarks(user_id)[0].json["project_ids"])
             for project in projects_list:
