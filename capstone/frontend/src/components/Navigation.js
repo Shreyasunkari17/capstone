@@ -12,6 +12,7 @@ import UserProfile from "../pages/UserProfile";
 import Login from "../pages/Login";
 import UserList from "../pages/UserList";
 import "../index.css";
+import MyProjectLists from "../pages/MyProjectLists";
 
 function Navigation({isAuthenticated, setIsAuthenticated}) {
 
@@ -43,7 +44,7 @@ function Navigation({isAuthenticated, setIsAuthenticated}) {
         />
         <Route
           path="/my-projects"
-          element={<ProjectLits isAuthenticated={isAuthenticated} />}
+          element={<MyProjectLists isAuthenticated={isAuthenticated} />}
         />
         <Route path="/project/:projectId" element={<ProjectDetails />} />{" "}
         {/* Project Details Route */}
