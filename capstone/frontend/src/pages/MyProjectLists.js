@@ -588,7 +588,7 @@ function MyProjectLists({ isAuthenticated }) {
       }
 
       const data = await response.json();
-      setProjects(data.filter(d => d.created_by === userId));
+      setProjects(data.filter(d => d.created_by === userId).sort((a, b) => b.favorite - a.favorite));
       setShowLoader(false);
     } catch (error) {
       setShowLoader(false);
