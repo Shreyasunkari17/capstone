@@ -37,7 +37,7 @@ def upload_project():
 
         if 'file' in request.files:
             file = request.files['file']
-            upload_folder = '~/static/uploads'
+            upload_folder = '/home/ubuntu/capstone/capstone/backend/static/uploads'
 
             if not os.path.exists(upload_folder):
                 os.makedirs(upload_folder)
@@ -49,7 +49,7 @@ def upload_project():
                 project_id=new_project.id,
                 file_name=file.filename,
                 file_type=file.content_type,
-                file_path=file_path
+                file_path=os.path.join("/static/uploads", file.filename)
             )
             db.session.add(media)
             db.session.commit()
