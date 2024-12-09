@@ -588,7 +588,7 @@ function ProjectLits({ isAuthenticated }) {
       }
 
       const data = await response.json();
-      setProjects(data);
+      setProjects(data.sort((a, b) => b.favorite - a.favorite));
       setShowLoader(false);
     } catch (error) {
       setShowLoader(false);
