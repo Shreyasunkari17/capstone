@@ -195,3 +195,19 @@ code {
   cursor: pointer;
   color: #faad14 !important;
 }
+
+.cardBgColor .ant-card .ant-card-head{
+  background-color: #faad14 !important;
+  border-radius: 0 !important;
+  color: #000;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.cardBgColor .ant-card-body {
+  padding: 5px;
+}
+
+.cardBgColor .ant-card {
+  box-shadow: none !important;
+}
