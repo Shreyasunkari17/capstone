@@ -153,6 +153,40 @@ cd capstone
 
 ---
 
+## Sequence Diagram
+
+<img width="453" alt="image" src="https://github.com/user-attachments/assets/2435334c-5f4a-45ca-a94a-4631d40647ae" />
+
+
+The sequence diagram illustrates the interactions between the User, Frontend, Backend, and Database during the Project Upload process. It highlights key steps such as user authentication, metadata validation, and project storage. This visualization clarifies the platform's workflow, ensuring efficient handling of data uploads and secure user interactions.
+
+### Workflow:
+1. **Project Upload Request:**
+   - The User fills out the Project Upload Form on the Frontend.
+2. **POST Request:**
+   - The Frontend sends a `POST /api/upload_project` request to the Backend with the project details.
+3. **User Authentication:**
+   - The Backend validates user credentials.
+     - **Condition 1:** If the user is authenticated:
+       - Proceed to project upload.
+     - **Condition 2:** If the user is not authenticated:
+       - Return an "Unauthorized access" error.
+4. **Insert Project Details:**
+   - The Backend inserts project metadata (e.g., title, description) into the Database.
+5. **Media File Handling (Conditional):**
+   - **If media exists:**
+     - The backend processes and stores the media file details in the database.
+   - **If no media is uploaded:**
+     - The backend logs "No media" and skips media processing.
+6. **Response to Frontend:**
+   - Upon successful upload, the Backend returns a success message to the Frontend.
+   - If an error occurs (e.g., unauthorized access or database failure), an appropriate error message is returned.
+7. **Frontend Display:**
+   - The Frontend displays a success or error message to the User.
+   - In case of failure, the user is given the option to retry.
+
+---
+
 ## Testing
 - Use **Postman** for validating backend APIs.
 - Conduct performance tests for search and upload operations.
