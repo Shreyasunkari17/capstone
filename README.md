@@ -16,6 +16,7 @@ With the system's powerful search and browsing features, academics, students, an
   - [Prerequisites](#prerequisites)
   - [Steps](#steps)
 - [User Stories](#user-stories)
+- [Sequence Diagram](#sequence-diagram)
 - [Testing](#testing)
 - [Future Enhancements](#future-enhancements)
 - [Contributing](#contributing)
