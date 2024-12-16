@@ -1,7 +1,11 @@
 # Capstone Portfolio Platform
 
 ## Project Description
-The Capstone Portfolio Platform is a centralized web application designed to store, showcase, and discover capstone projects effectively. It aims to enhance collaboration among students, faculty, and external stakeholders, providing a unified and innovative platform for academic growth and engagement.
+The focus of Capstone Portfolio is to build a centralized digital platform where in students can exhibit their capstone projects. This portfolio serves a hub for exploring diverse projects with a structured environment for students to upload comprehensive detailing about their projects including essential metadata like titles, abstracts, team members, sponsors, faculty advisors, and various media types such as reports, videos, and images. The Capstone Portfolio consolidates these features into a unified repository, making it simple for students, faculty, and potential sponsors to access and share academic work. This streamlined platform enhances collaboration and engagement within the academic community, fostering connections that can lead to innovative partnerships and opportunities.
+
+
+With the system's powerful search and browsing features, academics, students, and outside organizations will be able to find interesting projects, work together on ongoing initiatives, and gain knowledge from previous projects.
+
 
 ---
 
@@ -150,5 +154,5 @@ We welcome contributions to enhance the platform. Please create a pull request w
 ---
 
 ## Contact
-For inquiries or feedback, contact **Shreya Sunkari** at [your-email@example.com].
+For inquiries or feedback, contact **Shreya Sunkari** at pf60494@umbc.edu.
 
