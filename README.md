@@ -68,6 +68,9 @@ With the system's powerful search and browsing features, academics, students, an
 ---
 
 ## System Architecture
+
+<img width="682" alt="image" src="https://github.com/user-attachments/assets/f3f87e98-9137-483d-8181-439da666aee7" />
+
 1. **Frontend:** React.js for a dynamic, user-friendly interface.
 2. **Backend:** Flask (Python) providing RESTful APIs.
 3. **Database:** PostgreSQL for structured storage and efficient querying.
