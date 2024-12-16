@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Button, Typography, Row, Col, Divider, Input, Table, message } from "antd";
+import {
+  Button,
+  Typography,
+  Row,
+  Col,
+  Divider,
+  Input,
+  Table,
+  message,
+} from "antd";
 import { useNavigate } from "react-router-dom";
+import Summary from "./summary";
 const { Title } = Typography;
 const { Search } = Input;
 
@@ -51,23 +61,26 @@ function Home() {
     },
     {
       title: "Bookmarks",
-      dataIndex: "bookmark_count"
+      dataIndex: "bookmark_count",
     },
     {
       title: "Views",
-      dataIndex: "no_of_views"
-    }
+      dataIndex: "no_of_views",
+    },
   ];
 
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch("http://3.129.207.78:5000/api/get_featured_projects", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          "http://3.129.207.78:5000/api/get_featured_projects",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Failed to fetch featured projects");
@@ -76,7 +89,9 @@ function Home() {
         const data = await response.json();
         setFeaturedProjects(data);
       } catch (error) {
-        message.error("Failed to load featured projects. Please try again later.");
+        message.error(
+          "Failed to load featured projects. Please try again later."
+        );
       }
     };
 
@@ -144,6 +159,9 @@ function Home() {
             />
           </form>
         </Col>
+      </Row>
+      <Row style={{ padding: "3% 0" }}>
+          <Summary />
       </Row>
       <div className="users-list-layout" style={{ margin: "10px 10%" }}>
         <Row>
