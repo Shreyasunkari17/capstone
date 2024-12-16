@@ -3,7 +3,6 @@
 ## Project Description
 The focus of Capstone Portfolio is to build a centralized digital platform where in students can exhibit their capstone projects. This portfolio serves a hub for exploring diverse projects with a structured environment for students to upload comprehensive detailing about their projects including essential metadata like titles, abstracts, team members, sponsors, faculty advisors, and various media types such as reports, videos, and images. The Capstone Portfolio consolidates these features into a unified repository, making it simple for students, faculty, and potential sponsors to access and share academic work. This streamlined platform enhances collaboration and engagement within the academic community, fostering connections that can lead to innovative partnerships and opportunities.
 
-
 With the system's powerful search and browsing features, academics, students, and outside organizations will be able to find interesting projects, work together on ongoing initiatives, and gain knowledge from previous projects.
 
 
@@ -16,10 +15,10 @@ With the system's powerful search and browsing features, academics, students, an
 - [Setup Instructions](#setup-instructions)
   - [Prerequisites](#prerequisites)
   - [Steps](#steps)
+- [User Stories](#user-stories)
 - [Testing](#testing)
 - [Future Enhancements](#future-enhancements)
 - [Contributing](#contributing)
-- [License](#license)
 - [Contact](#contact)
 
 ---
@@ -129,6 +128,25 @@ cd capstone
 #### Deployment to AWS
 - Use EC2 instances for backend and database hosting.
 - Deploy the React frontend using AWS S3 or similar hosting services.
+
+---
+
+## User Stories
+
+| **ID** | **User Story**                                                                                      | **Status** |
+|--------|----------------------------------------------------------------------------------------------------|------------|
+| 1   | As a user, I want to upload my project in a structured way so that my project details are consistent and easy to retrieve.  | ✅ Done     |
+| 2   | As a user, I want to attach media files (reports, code, videos, etc.) to my project.	                                         | ✅ Done     |
+| 3   | As a user, I want to search for projects using specific criteria like title, course, or semester.          | ✅ Done     |
+| 4   | As a user, I want to securely log in and have role-based access (e.g., student, faculty, external).                 | ✅ Done     |
+| 5   | As a user, I want to bookmark or mark projects as favourites.	          | ✅ Done     |
+| 6   | As a user, I want to view analytics (views, ratings, bookmarks) for a project.                 | ✅ Done     |
+| 7   | As a user, I want a profile page displaying my contributions, uploaded projects, and bookmarks	                         | ✅ Done     |
+| 8   | As a user, I want to sort and filter projects by criteria such as popularity or ratings.                       | ✅ Done     |
+| 9   | As an administrator, I want to showcase specific projects in a “Featured Projects” section.            | ✅ Done  |
+| 10   | As a user, I want to tag projects with relevant keywords and categories (e.g., "AI," "Blockchain").    | ✅ Done  |
+| 11   | As a user, I want to view detailed profiles of students or teams behind each project.    | ✅ Done   |
+| 12   | As a project owner, I want to toggle my project  between public and private viewing modes.   | ✅ Done   |
 
 ---
 
