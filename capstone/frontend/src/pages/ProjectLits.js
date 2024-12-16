@@ -19,7 +19,7 @@ import {
   HeartOutlined,
   HeartFilled,
   BookOutlined,
-  BookFilled
+  BookFilled,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import CreateProjectForm from "./CreateProjectForm";
@@ -58,20 +58,20 @@ function ProjectLits({ isAuthenticated }) {
     setOpen(false);
     try {
       const body = {
-        project_id: selectedRecord.id
-      }
+        project_id: selectedRecord.id,
+      };
       const response = await fetch(
         `http://3.129.207.78:5000/api/remove_project`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body)
+          body: JSON.stringify(body),
         }
       );
       const data = await response.json();
       setShowLoader(false);
       message.success("Project Deleted Successfully");
-      fetchProjects()
+      fetchProjects();
     } catch (error) {
       setShowLoader(false);
       message.error("Error while deleting the Project");
@@ -146,7 +146,7 @@ function ProjectLits({ isAuthenticated }) {
   const handleOk = async () => {
     setShowLoader(true);
     const requestBody = new FormData();
-  
+
     // Append all form fields to FormData
     requestBody.append("title", formData.title);
     requestBody.append("abstract", formData.abstract);
@@ -154,22 +154,25 @@ function ProjectLits({ isAuthenticated }) {
     requestBody.append("year", formData.year);
     requestBody.append("sponsor", formData.sponsor);
     requestBody.append("created_by", formData.created_by); // Add selected user ID
-  
+
     // If file is selected, append it to FormData
     if (formData.file) {
       requestBody.append("file", formData.file);
     }
-  
+
     // Log the FormData before sending it
     console.log("FormData to be sent:", requestBody);
-  
+
     try {
-      const response = await fetch("http://3.129.207.78:5000/api/upload_project", {
-        method: "POST",
-        body: requestBody, // Send the FormData object directly
-        // Do not set the Content-Type header. The browser will do that for you.
-      });
-  
+      const response = await fetch(
+        "http://3.129.207.78:5000/api/upload_project",
+        {
+          method: "POST",
+          body: requestBody, // Send the FormData object directly
+          // Do not set the Content-Type header. The browser will do that for you.
+        }
+      );
+
       if (response.ok) {
         // Reset form data on success
         setFormData({
@@ -197,7 +200,6 @@ function ProjectLits({ isAuthenticated }) {
       message.error("Error while submitting the form");
     }
   };
-  
 
   const handleSubmit = async () => {
     setShowLoader(true);
@@ -245,7 +247,7 @@ function ProjectLits({ isAuthenticated }) {
   };
 
   const fetchProjectDetails = async (record) => {
-    let projectData 
+    let projectData;
     setShowLoader(true);
     try {
       const response = await fetch(
@@ -262,7 +264,7 @@ function ProjectLits({ isAuthenticated }) {
         message.error("Failed to fetch project details");
       }
       const data = await response.json();
-      projectData = data
+      projectData = data;
       setShowLoader(false);
     } catch (error) {
       setShowLoader(false);
@@ -306,11 +308,11 @@ function ProjectLits({ isAuthenticated }) {
   const addToFavourites = async (record) => {
     setShowLoader(true);
     try {
-      const user = localStorage.getItem('id')
+      const user = localStorage.getItem("id");
       const body = {
         user_id: parseInt(user),
-        project_id: record.id
-      }
+        project_id: record.id,
+      };
       const response = await fetch(
         `http://3.129.207.78:5000/api/add_bookmark`,
         {
@@ -318,7 +320,7 @@ function ProjectLits({ isAuthenticated }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(body)
+          body: JSON.stringify(body),
         }
       );
 
@@ -326,7 +328,7 @@ function ProjectLits({ isAuthenticated }) {
         message.error("Failed to add project to favourites");
       } else {
         message.success("Added to favorites successfully");
-        fetchProjects()
+        fetchProjects();
       }
       setShowLoader(false);
     } catch (error) {
@@ -338,11 +340,11 @@ function ProjectLits({ isAuthenticated }) {
   const removeFromFavourites = async (record) => {
     setShowLoader(true);
     try {
-      const user = localStorage.getItem('id')
+      const user = localStorage.getItem("id");
       const body = {
         user_id: parseInt(user),
-        project_id: record.id
-      }
+        project_id: record.id,
+      };
       const response = await fetch(
         `http://3.129.207.78:5000/api/remove_bookmark`,
         {
@@ -350,7 +352,7 @@ function ProjectLits({ isAuthenticated }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(body)
+          body: JSON.stringify(body),
         }
       );
 
@@ -358,7 +360,7 @@ function ProjectLits({ isAuthenticated }) {
         message.error("Failed to remove project from favourites");
       } else {
         message.success("Removed project from favorites");
-        fetchProjects()
+        fetchProjects();
       }
       setShowLoader(false);
     } catch (error) {
@@ -370,11 +372,11 @@ function ProjectLits({ isAuthenticated }) {
   const addToFeatured = async (record) => {
     setShowLoader(true);
     try {
-      const user = localStorage.getItem('id')
+      const user = localStorage.getItem("id");
       const body = {
         user_id: parseInt(user),
-        project_id: record.id
-      }
+        project_id: record.id,
+      };
       const response = await fetch(
         `http://3.129.207.78:5000/api/add_featured`,
         {
@@ -382,7 +384,7 @@ function ProjectLits({ isAuthenticated }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(body)
+          body: JSON.stringify(body),
         }
       );
 
@@ -390,7 +392,7 @@ function ProjectLits({ isAuthenticated }) {
         message.error("Failed to add project to featured list");
       } else {
         message.success("Added to featured list successfully");
-        fetchProjects()
+        fetchProjects();
       }
       setShowLoader(false);
     } catch (error) {
@@ -402,11 +404,11 @@ function ProjectLits({ isAuthenticated }) {
   const removeFromFeatured = async (record) => {
     setShowLoader(true);
     try {
-      const user = localStorage.getItem('id')
+      const user = localStorage.getItem("id");
       const body = {
         user_id: parseInt(user),
-        project_id: record.id
-      }
+        project_id: record.id,
+      };
       const response = await fetch(
         `http://3.129.207.78:5000/api/remove_featured`,
         {
@@ -414,7 +416,7 @@ function ProjectLits({ isAuthenticated }) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(body)
+          body: JSON.stringify(body),
         }
       );
 
@@ -422,7 +424,7 @@ function ProjectLits({ isAuthenticated }) {
         message.error("Failed to remove project from featured list");
       } else {
         message.success("Removed project from featured list");
-        fetchProjects()
+        fetchProjects();
       }
       setShowLoader(false);
     } catch (error) {
@@ -431,8 +433,8 @@ function ProjectLits({ isAuthenticated }) {
     }
   };
 
-  const userId = parseInt(localStorage.getItem('id'))
-  const isAdmin = localStorage.getItem('role') == "Admin"
+  const userId = parseInt(localStorage.getItem("id"));
+  const isAdmin = localStorage.getItem("role") == "Admin";
 
   const columns = [
     {
@@ -511,77 +513,96 @@ function ProjectLits({ isAuthenticated }) {
       hidden: !isAuthenticated,
       render: (text, record, index) => (
         <>
-          {(isAdmin || record.created_by == userId) && (<EditOutlined
-            onClick={() => {
-              fetchProjectDetails(record);
-            }}
-            className="action-pointers"
-          />)}
-          {(isAdmin || record.created_by == userId) && (<Popconfirm
-            title="Delete the project"
-            open={open && selectedRecord?.id === record.id}
-            onOpenChange={(newOpen) => handleOpenChange(newOpen, record)}
-            onConfirm={confirm}
-            onCancel={cancel}
-            okText="Yes"
-            cancelText="No"
-            description="Are you sure to delete this Project?"
-            icon={<QuestionCircleOutlined style={{ color: "red" }} />}
-          >
-            <DeleteOutlined className="action-pointers" />
-          </Popconfirm>)}
-          {record.favorite ? (!isAdmin && <HeartFilled
-            title="Remove from favourites"
-            onClick={() => {
-              removeFromFavourites(record);
-            }}
-            className="action-pointers"
-          >
-            <DeleteOutlined className="action-pointers" />
-          </HeartFilled>) : (!isAdmin && <HeartOutlined
-            title="Add to favourites"
-            onClick={() => {
-              addToFavourites(record);
-            }}
-            className="action-pointers"
-          >
-            <DeleteOutlined className="action-pointers" />
-          </HeartOutlined>)}
-          {record.is_featured ? (isAdmin && <BookFilled
-            title="Remove as featured"
-            onClick={() => {
-              removeFromFeatured(record);
-            }}
-            className="action-pointers"
-          >
-            <DeleteOutlined className="action-pointers" />
-          </BookFilled>) : (isAdmin && <BookOutlined
-            title="Mark as featured"
-            onClick={() => {
-              addToFeatured(record);
-            }}
-            className="action-pointers"
-          >
-            <DeleteOutlined className="action-pointers" />
-          </BookOutlined>)}
+          {isAdmin && (
+            <EditOutlined
+              onClick={() => {
+                fetchProjectDetails(record);
+              }}
+              className="action-pointers"
+            />
+          )}
+          {isAdmin && (
+            <Popconfirm
+              title="Delete the project"
+              open={open && selectedRecord?.id === record.id}
+              onOpenChange={(newOpen) => handleOpenChange(newOpen, record)}
+              onConfirm={confirm}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+              description="Are you sure to delete this Project?"
+              icon={<QuestionCircleOutlined style={{ color: "red" }} />}
+            >
+              <DeleteOutlined className="action-pointers" />
+            </Popconfirm>
+          )}
+          {record.favorite
+            ? !isAdmin && (
+                <HeartFilled
+                  title="Remove from favourites"
+                  onClick={() => {
+                    removeFromFavourites(record);
+                  }}
+                  className="action-pointers"
+                >
+                  <DeleteOutlined className="action-pointers" />
+                </HeartFilled>
+              )
+            : !isAdmin && (
+                <HeartOutlined
+                  title="Add to favourites"
+                  onClick={() => {
+                    addToFavourites(record);
+                  }}
+                  className="action-pointers"
+                >
+                  <DeleteOutlined className="action-pointers" />
+                </HeartOutlined>
+              )}
+          {record.is_featured
+            ? isAdmin && (
+                <BookFilled
+                  title="Remove as featured"
+                  onClick={() => {
+                    removeFromFeatured(record);
+                  }}
+                  className="action-pointers"
+                >
+                  <DeleteOutlined className="action-pointers" />
+                </BookFilled>
+              )
+            : isAdmin && (
+                <BookOutlined
+                  title="Mark as featured"
+                  onClick={() => {
+                    addToFeatured(record);
+                  }}
+                  className="action-pointers"
+                >
+                  <DeleteOutlined className="action-pointers" />
+                </BookOutlined>
+              )}
         </>
       ),
     },
     {
       title: "Views",
       dataIndex: "no_of_views",
-    }
+    },
   ];
 
   const fetchProjects = async () => {
     setShowLoader(true);
     try {
-      const response = await fetch(`http://3.129.207.78:5000/api/projects?userId=${userId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `http://3.129.207.78:5000/api/projects?userId=${userId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch projects");
@@ -633,8 +654,10 @@ function ProjectLits({ isAuthenticated }) {
       </Row>
       <Table
         columns={columns}
-        dataSource={projects?.filter((val) =>
-          (val?.title?.toLowerCase().includes(searchQuery?.toLowerCase()) || val?.abstract?.toLowerCase().includes(searchQuery?.toLowerCase()))
+        dataSource={projects?.filter(
+          (val) =>
+            val?.title?.toLowerCase().includes(searchQuery?.toLowerCase()) ||
+            val?.abstract?.toLowerCase().includes(searchQuery?.toLowerCase())
         )}
         rowSelection={null}
       />
