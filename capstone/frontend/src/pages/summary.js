@@ -10,8 +10,6 @@ import {
   message,
   Card,
 } from "antd";
-import { useNavigate } from "react-router-dom";
-const { Paragraph, Title } = Typography;
 import {
   BulbFilled,
   DollarCircleFilled,
@@ -19,6 +17,8 @@ import {
   UsergroupAddOutlined,
   SettingFilled,
 } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+const { Paragraph, Title } = Typography;
 
 function Summary() {
   return (
@@ -319,7 +319,7 @@ function Summary() {
         <Row>
           <Col span={24} className="cardBgColor">
             <Card
-              title="Title"
+              title="Software Engineering Faculty"
               bordered={true}
               style={{ width: 300, borderRadius: "0px" }}
             >
@@ -327,7 +327,7 @@ function Summary() {
                 <Row>
                   <img
                     src={
-                      "https://www.engr.washington.edu/files/industry/imgs/jill-dalinkus.png"
+                      "https://webadmin.umbc.edu/admin/CV/Photo?campus_id=VN52654"
                     }
                   />
                 </Row>
@@ -341,19 +341,18 @@ function Summary() {
                       }}
                     >
                       <Title
-                        level={5}
+                        level={3}
                         style={{ fontWeight: "700", color: "#000" }}
                       >
-                        Name
+                        Mohammad Samarah
                       </Title>
-                      CoE Industry <br />
-                      Capstone Program Director
+                      <Title level={5}>Professor of the Practice, <br />
+                      Software Engineering</Title>
+                      Information Systems,
                       <br />
-                      206-221-7955
+                      <a href="mailto:msamarah@umbc.edu">msamarah@umbc.edu</a>,
                       <br />
-                      <a href="mailto:jmd4@uw.edu">jmd4@uw.edu</a>
-                      <br />
-                      201 Engineering Annex
+                      Information Technology & Engineering 407
                     </p>
                   </Row>
                 </Row>
@@ -362,12 +361,13 @@ function Summary() {
                 <Row>
                   <img
                     src={
-                      "https://www.engr.washington.edu/files/industry/imgs/jill-dalinkus.png"
+                      "https://professionalprograms.umbc.edu/wp-content/uploads/2022/12/Melissa-Morris-headshot-150x150.jpg"
                     }
+                    width={"100%"}
                   />
                 </Row>
                 <Row style={{ border: "1px solid #0000002e", padding: "10px" }}>
-                  <Row>
+                <Row>
                     <p
                       style={{
                         fontWeight: "600",
@@ -376,19 +376,13 @@ function Summary() {
                       }}
                     >
                       <Title
-                        level={5}
+                        level={3}
                         style={{ fontWeight: "700", color: "#000" }}
                       >
-                        Name
+                        Melissa Morris
                       </Title>
-                      CoE Industry <br />
-                      Capstone Program Director
-                      <br />
-                      206-221-7955
-                      <br />
-                      <a href="mailto:jmd4@uw.edu">jmd4@uw.edu</a>
-                      <br />
-                      201 Engineering Annex
+                      <Title level={5}>Faculty Member, <br />
+                      Ph.D. Mechanical Engineering</Title>
                     </p>
                   </Row>
                 </Row>
