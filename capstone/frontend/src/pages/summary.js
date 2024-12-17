@@ -50,8 +50,7 @@ function Summary() {
                     paddingRight: "5%",
                   }}
                 >
-                  Potential sponsors propose a project for review by College of
-                  Engineering faculty
+                  Prospective sponsors submit a project for evaluation by College of Engineering faculty
                 </Paragraph>
               </Col>
             </Row>
@@ -80,8 +79,7 @@ function Summary() {
                     paddingRight: "5%",
                   }}
                 >
-                  Organizations commit financially to cover project costs and
-                  program fee
+                  Organizations provide financial support to cover project expenses and program fees
                 </Paragraph>
               </Col>
             </Row>
@@ -110,7 +108,7 @@ function Summary() {
                     paddingRight: "5%",
                   }}
                 >
-                  Students are matched to an approved project and faculty mentor
+                  Students are assigned to a selected project and paired with a faculty advisor
                 </Paragraph>
               </Col>
             </Row>
@@ -139,8 +137,7 @@ function Summary() {
                     paddingRight: "5%",
                   }}
                 >
-                  Technical mentor meets with the team weekly for project
-                  duration (January – June)
+                  Weekly sessions with the technical mentor are scheduled for the entire project duration (January – June)
                 </Paragraph>
               </Col>
             </Row>
