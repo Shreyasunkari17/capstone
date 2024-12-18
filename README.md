@@ -1,5 +1,8 @@
 # Capstone Portfolio Platform
 
+
+### Website Public URL: http://3.129.207.78:3000/home
+
 ## Project Description
 The focus of Capstone Portfolio is to build a centralized digital platform where in students can exhibit their capstone projects. This portfolio serves a hub for exploring diverse projects with a structured environment for students to upload comprehensive detailing about their projects including essential metadata like titles, abstracts, team members, sponsors, faculty advisors, and various media types such as reports, videos, and images. The Capstone Portfolio consolidates these features into a unified repository, making it simple for students, faculty, and potential sponsors to access and share academic work. This streamlined platform enhances collaboration and engagement within the academic community, fostering connections that can lead to innovative partnerships and opportunities.
 
@@ -144,13 +147,12 @@ cd capstone
 | 3   | As a user, I want to search for projects using specific criteria like title, course, or semester.          | ✅ Done     |
 | 4   | As a user, I want to securely log in and have role-based access (e.g., student, faculty, external).                 | ✅ Done     |
 | 5   | As a user, I want to bookmark or mark projects as favourites.	          | ✅ Done     |
-| 6   | As a user, I want to view analytics (views, ratings, bookmarks) for a project.                 | ✅ Done     |
+| 6   | As a user, I want to view analytics (views, bookmarks) for a project.                 | ✅ Done     |
 | 7   | As a user, I want a profile page displaying my contributions, uploaded projects, and bookmarks	                         | ✅ Done     |
-| 8   | As a user, I want to sort and filter projects by criteria such as popularity or ratings.                       | ✅ Done     |
+| 8   | As a user, I want to sort and filter projects by criteria such as popularity.                       | ✅ Done     |
 | 9   | As an administrator, I want to showcase specific projects in a “Featured Projects” section.            | ✅ Done  |
 | 10   | As a user, I want to tag projects with relevant keywords and categories (e.g., "AI," "Blockchain").    | ✅ Done  |
-| 11   | As a user, I want to view detailed profiles of students or teams behind each project.    | ✅ Done   |
-| 12   | As a project owner, I want to toggle my project  between public and private viewing modes.   | ✅ Done   |
+| 11   | As a user, I want to view detailed profiles of students behind each project.    | ✅ Done   |
 
 ---
 
