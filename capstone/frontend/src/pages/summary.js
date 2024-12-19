@@ -173,8 +173,7 @@ function Summary() {
             <Paragraph
               style={{ fontSize: "18px", color: "#000", fontWeight: "400" }}
             >
-              Customized opportunities to assess student talent and recruit for
-              jobs
+              Cultivate productive relationships through hands-on projects.
             </Paragraph>
           </Col>
           <Col span={11} style={{ margin: "1% 0% 1% 2%", borderBottom: "1px solid #dee2e6" }}>
@@ -200,8 +199,7 @@ function Summary() {
             <Paragraph
               style={{ fontSize: "18px", color: "#000", fontWeight: "400" }}
             >
-              Boost public awareness of your organization through student
-              engagement
+              Enhance visibility and reputation within the academic community.
             </Paragraph>
           </Col>
           <Col span={11} style={{ margin: "1% 2% 1% 0%", borderBottom: "1px solid #dee2e6" }}>
@@ -227,7 +225,7 @@ function Summary() {
             <Paragraph
               style={{ fontSize: "18px", color: "#000", fontWeight: "400" }}
             >
-              Low-cost opportunity for a fresh look at a problem
+              Gain fresh insights and innovative solutions to tackle complex challenges
             </Paragraph>
           </Col>
           <Col span={11} style={{ margin: "1% 0% 1% 2%", borderBottom: "1px solid #dee2e6" }}>
@@ -237,7 +235,7 @@ function Summary() {
                   level={3}
                   style={{ fontWeight: "700", color: "#85754d" }}
                 >
-                  UW partnerships
+                  UMBC partnerships
                 </Title>
               </Col>
               <Col span={2}>
@@ -253,61 +251,7 @@ function Summary() {
             <Paragraph
               style={{ fontSize: "18px", color: "#000", fontWeight: "400" }}
             >
-              Build impactful connections within the UW College of Engineering
-            </Paragraph>
-          </Col>
-          <Col span={11} style={{ margin: "1% 2% 1% 0%" }}>
-            <Row>
-              <Col span={22}>
-                <Title
-                  level={3}
-                  style={{ fontWeight: "700", color: "#85754d" }}
-                >
-                  Professional development
-                </Title>
-              </Col>
-              <Col span={2}>
-                <SettingFilled
-                  style={{
-                    fontSize: "28px",
-                    paddingTop: "12%",
-                    color: "#faad14",
-                  }}
-                />
-              </Col>
-            </Row>
-            <Paragraph
-              style={{ fontSize: "18px", color: "#000", fontWeight: "400" }}
-            >
-              Opportunity for technical mentor to practice and apply leadership
-              skills
-            </Paragraph>
-          </Col>
-          <Col span={11} style={{ margin: "1% 0% 1% 2%" }}>
-            <Row>
-              <Col span={22}>
-                <Title
-                  level={3}
-                  style={{ fontWeight: "700", color: "#85754d" }}
-                >
-                  Commercial licenses
-                </Title>
-              </Col>
-              <Col span={2}>
-                <SettingFilled
-                  style={{
-                    fontSize: "28px",
-                    paddingTop: "12%",
-                    color: "#faad14",
-                  }}
-                />
-              </Col>
-            </Row>
-            <Paragraph
-              style={{ fontSize: "18px", color: "#000", fontWeight: "400" }}
-            >
-              Non-exclusive commercial license to any IP developed through
-              project
+              Build meaningful partnerships within the university ecosystem
             </Paragraph>
           </Col>
         </Row>
@@ -344,12 +288,8 @@ function Summary() {
                         Mohammad Samarah
                       </Title>
                       <Title level={5}>Professor of the Practice, <br />
-                      Software Engineering</Title>
-                      Information Systems,
-                      <br />
-                      <a href="mailto:msamarah@umbc.edu">msamarah@umbc.edu</a>,
-                      <br />
-                      Information Technology & Engineering 407
+                      Software Engineering, Information Systems</Title>
+                      <a href="mailto:msamarah@umbc.edu">msamarah@umbc.edu</a>
                     </p>
                   </Row>
                 </Row>
@@ -358,7 +298,7 @@ function Summary() {
                 <Row>
                   <img
                     src={
-                      "https://professionalprograms.umbc.edu/wp-content/uploads/2022/12/Melissa-Morris-headshot-150x150.jpg"
+                      "https://lh3.googleusercontent.com/a-/ALV-UjXP_4kv82JpoxXCl1U7ypgODNRjRmpl8DDbNQ089myV0COoebA=s544-p-k-no"
                     }
                     width={"100%"}
                   />
@@ -380,6 +320,8 @@ function Summary() {
                       </Title>
                       <Title level={5}>Faculty Member, <br />
                       Ph.D. Mechanical Engineering</Title>
+                      <a href="mailto:melissam@umbc.edu">melissam@umbc.edu</a>
+                      <br />
                     </p>
                   </Row>
                 </Row>
