@@ -23,7 +23,6 @@ With the system's powerful search and browsing features, academics, students, an
 - [Testing](#testing)
 - [Future Enhancements](#future-enhancements)
 - [Contributing](#contributing)
-- [Contact](#contact)
 
 ---
 
@@ -209,8 +208,5 @@ The sequence diagram illustrates the interactions between the User, Frontend, Ba
 We welcome contributions to enhance the platform. Please create a pull request with a detailed explanation of your changes.
 
 
----
 
-## Contact
-For inquiries or feedback, contact **Shreya Sunkari** at pf60494@umbc.edu.
 
